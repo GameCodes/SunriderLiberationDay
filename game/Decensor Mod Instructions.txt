@@ -1,0 +1,8 @@
+Sunrider Liberation Day Captain's Edition
+DECENSOR MOD V3.1
+
+1. Extract zip
+2. Find local download location by right clicking Sunrider Liberation Day on Steam, pressing "properties" > local files tab > "browse local files"
+3. Drop "init_censored.rpy" "init_censored.rpyc" and "modarchive.rpa" into SunriderLiberationDay/game/ folder
+4. Do not replace any files, or put the files into any other folder aside from the one called /game/. Do not put the entire mod folder into /game/, just the three individual files.
+5. On start up there should be a 18+ warning and "DENPA EDITION" should appear on the top left side of the main menu.
