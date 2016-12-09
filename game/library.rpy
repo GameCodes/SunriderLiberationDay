@@ -4872,7 +4872,7 @@ init -1 python: ## store items ##
     class MIRVTorpedoLicence(StoreItem):
         def __init__(self):
             StoreItem.__init__(self)
-            self.id = 'MIRV QUANTUM TORPEDO LICENSE'
+            self.id = 'MIRV Quantum Torpedo License'
             self.display_name = u"MIRV量子弹头许可"
             self.cost = 8000
             self.tooltip = u"尽管这被联盟的法律禁止，但我们并没有遵守他们法律的必要不是吗？只要向矿业联合支付一笔可观的费用，他们就可以为我们提供弹头，同时解决掉包括一万两千页“使用条款”在内的法律问题。太阳骑士号的火箭可以造成溅射伤害。" 
