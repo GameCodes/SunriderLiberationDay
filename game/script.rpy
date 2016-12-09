@@ -8,7 +8,7 @@
 label splashscreen:
 
     scene black
-    if CENSOR == False and CENSOR_ver == 3:
+    if CENSOR == False:
         show warning:
             xalign 0.5 yalign 0.5
         with dissolve
@@ -49,14 +49,13 @@ label start:
             python:
                 for var in important_variables:
                     setattr(store, var, getattr(mp,var))
-                affection_kryska += affection_tera
     
     if customstat == True:
     
         call beginstat from _call_beginstat
 
     stop music fadeout 1.5
-        
+    
     hide history
     scene bg black
     show screen quick_menu
@@ -1047,7 +1046,6 @@ label chigara_windows:
     play music "Music/Colors_Chigara.ogg" fadeout 1.5
 
     scene bg messhallwindows with dissolve
-    $reset_sprites()
     
     $dshow("chigara handonchest neutral narrow sad",0.5)
     window show
@@ -1108,7 +1106,6 @@ label chigara_windows:
     
     scene black with horizontalwipe
     scene bg crewcabin with horizontalwipe
-    $reset_sprites()
 
     "... ... ..."
     
@@ -1233,7 +1230,6 @@ label shipactivitybattle:
     play music "Music/Colors_main.ogg" fadeout 1.5
 
     scene bg bridge with dissolve
-    $reset_sprites()
     window show
 
     "Shields reported in to the bridge."
@@ -1440,7 +1436,6 @@ label avaofficereport:
     play music "Music/Colors_main.ogg" fadeout 1.5
     
     scene bg office with dissolve
-    $reset_sprites()
     
     $dshow ("ava fingerup talk neutral angry")
 
@@ -1613,7 +1608,6 @@ label icarikryska_eating:
     play music "Music/Monkeys_Spinning_Monkeys.ogg" fadeout 1.5
 
     scene bg messhall with dissolve
-    $reset_sprites()
     
     $dshow("icari handonhip smile neutral neutral",xpos=0.3)
     $dshow("kryska neutral neutral neutral neutral",xpos=0.7)
@@ -1740,7 +1734,6 @@ label kaytoofficemeeting:
     hide screen ship_map
     play music "Music/Cracking_the_Code.ogg" fadeout 1.5
     scene bg office with dissolve
-    $reset_sprites()
 
     window show
 
@@ -1900,7 +1893,6 @@ label officechigaratea:
     
     hide screen ship_map
     scene bg captainscabin with dissolve
-    $reset_sprites()
     
     $dshow("chigara handonchest smile neutral neutral blush")
     window show
@@ -1994,7 +1986,6 @@ label officechigaratea:
     chi "It's late, captain."
     
     scene bg captainscabin with dissolve
-    $reset_sprites()
     $dshow("chigara handonface smile narrow sad blush")
     
     "Chigara stood up and smiled."
@@ -2116,7 +2107,6 @@ label hangarlecture:
         
     play music "Music/Cracking_the_Code.ogg" fadeout 1.5
     scene bg hangar with dissolve
-    $reset_sprites()
     
     $dshow("ava fingerup shout neutral angry")
     
@@ -2183,10 +2173,11 @@ label hangarlecture:
     ica "'Sides, it's that pirate runt responsible for everything. The Havoc's just a tool. A tool we can take advantage of now for ourselves."
     "Shields crossed his arms in contemplation."
     
-    $ menu_choices = [
-                     ["Well commander, I think our pilots have a point.","savehavoc"],
-                     ["We can't use a ryder associated with the murder of innocents.","scraphavoc"],
-                     ]
+    $ choice1_text = u"中校，我觉得我们的驾驶员们说得不错。"
+    $ choice1_jump = "savehavoc"
+    
+    $ choice2_text = u"我们不能使用一台和屠杀关系密切的太空骑士。"
+    $ choice2_jump = "scraphavoc"
 
     show screen decision
     
@@ -2326,7 +2317,6 @@ label conference:
     play music "Music/Fallen_Angel_drone.ogg" fadeout 1.5
     
     scene bg stateroom with dissolve
-    $reset_sprites()
     
     window show
 
@@ -2428,7 +2418,6 @@ label avaofficesuspicion:
 
     hide screen ship_map
     scene bg office with dissolve
-    $reset_sprites()
     
     window show
     
@@ -2999,7 +2988,6 @@ label after_mission2:
     play music "Music/Colors_main.ogg" fadeout 1.5
 
     scene bg hangar with dissolve
-    $reset_sprites()
 
     "The hangar erupted with fanfare and applause as the ryders returned from battle."
     "The crowd made way for Shields as he walked to the Liberty."
@@ -3071,7 +3059,6 @@ label officerepairscomplete:
 
     scene black
     scene bg office with dissolvemedium
-    $reset_sprites()
     
     $dshow("ava handonhip neutral neutral neutral")
     
@@ -3246,7 +3233,6 @@ label sunriderwarpout:
     
     scene black with dissolvemedium
     scene bg crewcabin with dissolvemedium
-    $reset_sprites()
 
     "Asaga laid awake on her bed."
     "A dark premonition had come over her..."
@@ -3403,7 +3389,6 @@ label sunriderwarpout:
     play music "Music/Cracking_the_Code.ogg" fadeout 1.5
     
     scene bg bridge with dissolvemedium
-    $reset_sprites()
     
     $dshow("ava armscrossed neutral neutral angry")
         
@@ -3732,12 +3717,13 @@ label after_mission4:
     chi "H-huuuu... C-Chigara's just cutting the channel now..."
     ava "S-should we warp out, captain?"
     kay "... ... ..."
-
-    $ menu_choices = [
-                     ["No, we scavenge the battle site for lost technology.","scavagebattlesite"],
-                     ["The men and women who perished a century prior deserve our respect.","leavebattlesite"],
-                     ]
     
+    $ choice1_text = u"不，我们在战场遗址搜集失落科技的线索。"
+    $ choice1_jump = "scavagebattlesite"
+    
+    $ choice2_text = u"百年前逝者的亡魂需要得到我们的尊重。"
+    $ choice2_jump = "leavebattlesite"
+
     show screen decision
     
     pause
@@ -3929,7 +3915,6 @@ label battleofcera:
     window show
     
     scene bg bridge with dissolve
-    $reset_sprites()
     $dshow("ava handonhip neutral neutral angry")
 
     ava "The final jump is complete, captain. We have arrived at our destination."
@@ -4338,7 +4323,6 @@ label officechigaralap:
     
     scene black with horizontalwipe
     scene bg office with horizontalwipe
-    $reset_sprites()
     
     scene chigaralap1 with dissolve
     
@@ -4402,7 +4386,6 @@ label officechigaralap:
     
     play music "Music/Cracking_the_Code.ogg" fadeout 0.5
     scene bg office with dissolve
-    $reset_sprites()
     
     $dshow("ava armscrossed shout narrow angry",xpos=0.3)
     
@@ -4890,7 +4873,6 @@ label after_mission6:
     sol "Haa..."
     
     scene bg bridge with dissolve
-    $reset_sprites()
     
     kay "Bianca, retrieve the Liberty!"
     cla "U-understood!"
@@ -5751,7 +5733,6 @@ label mission7:
                 player_ships.remove(blackjack)
                 set_cell_available(blackjack.location)
                 blackjack.location = None
-                blackjack.buffs = [] #shoutouts to byakuryuu
             create_ship(EnemyBlackjack(),(13,11))
             enemy_ships[-1].brain.preferred_target = liberty
             times_bj_killed = 0
@@ -6354,7 +6335,6 @@ label after_mission8:
     ali "HAHAHAHA!!!!"
     
     scene bg bridge with dissolve
-    $reset_sprites()
     $dshow("ava armscrossed shout narrow angry")
     
     ava "Negative captain! The attack was completely ineffective!"
@@ -6924,8 +6904,6 @@ label asagawindows:
     
     scene black with dissolvemedium
     scene bg messhallwindows_cera with dissolvemedium
-    $reset_sprites()
-    
     $dshow("asaga armscrossed frown narrow sad")
     
     window show
@@ -7129,7 +7107,6 @@ label officechigarabathroom:
     play music "Music/Epic_Action_Hero.ogg" fadeout 1.5
     
     scene bg awardhall
-    $reset_sprites()
     show grey
     with screenwipe
     
@@ -7535,7 +7512,6 @@ label finalchapter:
     play music "Music/Gore_and_Sand.ogg" fadeout 1.5
 
     scene bg bridge with horizontalwipe
-    $reset_sprites()
     $dshow("kryska neutral neutral neutral angry",xpos=0.3)
     $dshow("ava armscrossed neutral neutral angry",xpos=0.7)
 
@@ -8145,7 +8121,6 @@ label newend:
     alp "Ah..."
 
     scene bg clonelab
-    $reset_sprites()
     show prototype_alpha
     with dissolve
 
@@ -8301,7 +8276,6 @@ label newend:
     
     play sound "sound/large_warpout.ogg"
     scene white with dissolve
-    $reset_sprites()
     scene bg clonelab
     show prototype_alpha
     with dissolve
@@ -8369,12 +8343,13 @@ label newend:
     kay "(That must mean that the lesser clones are essentially slaves...)"
     kay "(Of course... I saw that first hand when they mind controlled Chigara.)"
     kay "(Then could something have happened to free Lynn?)"
-
-    $ menu_choices = [
-                     ["You're lying... Chigara's not one of you.","chigaranotyou"],
-                     ["You're... not getting instructions. Are you?","notgettinginstructions"],
-                     ]
     
+    $ choice1_text = u"你骗人……切嘉拉不是你们的一员。"
+    $ choice1_jump = "chigaranotyou"
+    
+    $ choice2_text = u"你……已经不再收到指示了，对吗？"
+    $ choice2_jump = "notgettinginstructions"
+
     show screen decision
     
     pause
@@ -8569,10 +8544,12 @@ label premonitionurge:
     asa "After... all that...!"
     asa "I can't..."
     
-    $ menu_choices = [
-                     ["No... Chigara didn't betray me...","chigaradidntbetray"],
-                     ["...You were right after all... I was... fooled...!","rightifooled"],
-                     ]
+    $ choice1_text = u"不……切嘉拉没有背叛我……"
+    $ choice1_jump = "chigaradidntbetray"
+    
+    $ choice2_text = u"……你说得对……我被……愚弄了……！"
+    $ choice2_jump = "rightifooled"
+
     show screen decision
     
     pause
@@ -8914,7 +8891,6 @@ label thoughtbitbullet:
     kay "She's the reason why I'm still here."
     kay "She... saved me. Pulled me from the bridge while I was unconscious and put me inside the escape pod..."
     
-    $reset_sprites()
     $dshow("ava armscrossed neutral narrow angry")
     
     ava "It's a trick."
@@ -8957,10 +8933,12 @@ label thoughtbitbullet:
     ava "In any matter, I do not believe we can perform an execution in here at this moment..."
     ava "But perhaps later at another location..."
 
-    $ menu_choices = [
-                     ["Let's gag and bind her and then toss her in a cargo crate for now.","tielynnup"],
-                     ["She did save me... I think we still have a lot we could learn by keeping her here.","didsavelearn"],
-                     ]
+    $ choice1_text = u"先把她捆起来丢进货箱里。"
+    $ choice1_jump = "tielynnup"
+    
+    $ choice2_text = u"她毕竟救了我……我们还有好多东西要从她那里了解。"
+    $ choice2_jump = "didsavelearn"
+
     show screen decision
     
     pause
@@ -9100,12 +9078,13 @@ label shieldslookedholoport:
     ava "That we would sail the stars together. Captain and Commander."
     ava "In the mightiest ship of the Cera Space Force."
     ava "Together, as one. No matter the impossible odds."
-
-    $ menu_choices = [
-                     ["I know, Ava... I always knew. I'm sorry... It was my fault for pushing you away...","avaknowsorry"],
-                     ["The road ahead will be long. Can I count on you as my executive officer?","roadlongofficer"],
-                     ]
     
+    $ choice1_text = u"我知道，艾瓦……我一直知道。很抱歉……疏远你是我的错……"
+    $ choice1_jump = "avaknowsorry"
+    
+    $ choice2_text = u"前方的路还很漫长，我能继续依赖我的大副吗？"
+    $ choice2_jump = "roadlongofficer"
+
     show screen decision
     
     pause
@@ -9242,7 +9221,6 @@ label commanderunfairme:
 
     scene black with screenwipe
     scene bg pactbridge 
-    $reset_sprites()
     show fontana smirk
     with screenwipe
 
@@ -9385,7 +9363,6 @@ label commanderunfairme:
     
     scene black with dissolvemedium
     scene bg desert with dissolvemedium
-    $reset_sprites()
 
     play music "Music/Destinys_Path.ogg" fadeout 1.5
 
@@ -9483,10 +9460,12 @@ label commanderunfairme:
     sol "I am a threat more dire to this universe than either PACT or the prototypes."
     sol "One which must be removed."
 
-    $ menu_choices = [
-                     ["No. I'm not going to allow that, Sola!","notallowsola"],
-                     ["How can we even do that!?","howevendo"],
-                     ]
+    $ choice1_text = u"不，我不会允许那种事情发生，索拉！"
+    $ choice1_jump = "notallowsola"
+    
+    $ choice2_text = u"我们如何做到那种事情！？"
+    $ choice2_jump = "howevendo"
+
     show screen decision
     
     pause

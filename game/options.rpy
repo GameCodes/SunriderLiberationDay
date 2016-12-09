@@ -13,7 +13,7 @@ init -1 python hide:
     ## set to False before the game is released, so the user can't
     ## cheat using developer tools.
 
-    config.developer = "Auto"
+    config.developer = False
     config.autoreload = False
 
     ## These control the width and height of the screen.
@@ -29,7 +29,7 @@ init -1 python hide:
     # These control the name and version of the game, that are reported
     # with tracebacks and other debugging logs.
     config.name = "Release"
-    config.version = "3.01"
+    config.version = "2.03"
     
     config.thumbnail_height = 480
     config.thumbnail_width = 270
@@ -149,7 +149,7 @@ init -1 python hide:
 
     ## The file containing the default font.
 
-    style.default.font = "Fonts/ShareTech-Regular.ttf"
+    style.default.font = "NotoSansCJKsc-Regular.otf"
 
     ## The default size of text.
 
@@ -348,20 +348,16 @@ init python:
 
     ## To archive files, classify them as 'archive'.
 
-    #build.classify('game/**.png', 'archive')
-    #build.classify('game/**.jpg', 'archive')
-    #build.classify('game/**.ogg', 'archive')
-    #build.classify('game/**.ttf', 'archive')
-    #build.classify('game/**.mkv', 'archive')
-    #build.classify('game/**.webm', 'archive')
-    #build.classify('game/**.otf', 'archive')
+    build.classify('game/**.png', 'archive')
+    build.classify('game/**.jpg', 'archive')
+    build.classify('game/**.ogg', 'archive')
+    build.classify('game/**.ttf', 'archive')
+    build.classify('game/**.mkv', 'archive')
+    build.classify('game/**.webm', 'archive')
+    build.classify('game/**.otf', 'archive')
 
-    build.classify('game/Censored/*', 'archive')
-    build.classify('game/Censored/thumbs/*', 'archive')
-    build.classify('game/REturn_censored/*', 'archive')
-    build.classify('game/REturn_censored/thumbs/*', 'archive')
-    #build.classify('game/init_censored.rpy', 'archive')
-
+    #build.classify('game/Censored/*', 'archive')
+    #build.classify('game/Censored/thumbs/*', 'archive')
 
     ## Files matching documentation patterns are duplicated in a mac app
     ## build, so they appear in both the app and the zip file.
