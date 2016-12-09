@@ -10,6 +10,10 @@
 #
 # Screen that's used to display adv-mode dialogue.
 # http://www.renpy.org/doc/html/screen_special.html#say
+
+# init python:
+    # store.say_text_size = 50
+
 screen say(who, what, side_image=None, two_window=False):
 
     default side_image = None
@@ -45,14 +49,32 @@ screen say(who, what, side_image=None, two_window=False):
 
                 if _preferences.language == None:
 
-                    text what:
-                        id "what"
-                        size 50
-                        xpos 0
-                        ypos -60
-                        xmaximum 1640
-                        font "Fonts/ShareTech-Regular.ttf"
-                        outlines [(4, "#000000", 2, 2),(1, "#272727", 0, 0) ] 
+                    if len(what) > 300:
+                        $say_text_size = 45
+                    else:
+                        $say_text_size = 50
+                        
+                    if dlc == False:
+                    
+                        text what:
+                            id "what"
+                            size say_text_size
+                            xpos 0
+                            ypos -60
+                            xmaximum 1640
+                            font "Fonts/ShareTech-Regular.ttf"
+                            outlines [(4, "#000000", 2, 2),(1, "#272727", 0, 0) ] 
+                    
+                    if dlc == True:
+                    
+                        text what:
+                            id "what"
+                            size say_text_size
+                            xpos 0
+                            ypos -60
+                            xmaximum 1640
+                            font "NotoSansCJKsc-Regular.otf"
+                            outlines [(2, "#000000", 2, 2),(1, "#272727", 0, 0) ] 
                     
                 if _preferences.language == "japanese":
                     
@@ -64,9 +86,9 @@ screen say(who, what, side_image=None, two_window=False):
                         xmaximum 1640
                         font "Fonts/NotoSansCJKjp-Medium.otf"
                         outlines [(4, "#000000", 2, 2),(1, "#272727", 0, 0) ] 
-                        
+
                 if _preferences.language == "Chinese":
- 
+                    
                     text what:
                         id "what"
                         size 50
@@ -75,57 +97,30 @@ screen say(who, what, side_image=None, two_window=False):
                         xmaximum 1640
                         font "NotoSansCJKsc-Regular.otf"
                         outlines [(4, "#000000", 2, 2),(1, "#272727", 0, 0) ] 
-                                            
+
 screen decision:
     
     modal True
     zorder 100
-            
-    imagebutton at tr_decision(0):
-        xanchor 0.5
-        ypos 0.35
-        idle "UI/choice_base.png"
-        hover tr_hoverglow("UI/choice_base.png")
-        
-        activate_sound "sound/button1.ogg"
-        action (Hide("decision"),Jump(choice1_jump))
-        
-    imagebutton at tr_decision(0.2):
-        xanchor 0.5
-        ypos 0.5
-        idle "UI/choice_base.png"
-        hover tr_hoverglow("UI/choice_base.png")
-        
-        activate_sound "sound/button1.ogg"
-        action (Hide("decision"),Jump(choice2_jump))
-        
-    if decision_extra == True:
-        
-        imagebutton at tr_decision(0.4):
+    $pointBase = 0.35
+    if len(menu_choices) >= 4: # shift all up by .15, to keep it evenish
+        $pointBase = 0.2
+    if len(menu_choices) >= 6:
+        $pointBase = 0.05
+    for item in menu_choices:
+        imagebutton at tr_decision(0.2*menu_choices.index(item)):
             xanchor 0.5
-            ypos 0.65
+            ypos pointBase+(0.15*menu_choices.index(item))# (+0.15 ypos per item)
             idle "UI/choice_base.png"
             hover tr_hoverglow("UI/choice_base.png")
             
             activate_sound "sound/button1.ogg"
-            action (Hide("decision"),Jump(choice2_jump))
-                
-    text choice1_text at tr_decision(0):
-        text_align 0.5 xanchor 0.5 ypos 0.39
-        size 40
-        outlines [ (4, "#282828", 0, 0) ]     
-        
-    text choice2_text at tr_decision(0.2):
-        text_align 0.5 xanchor 0.5 ypos 0.54
-        size 40
-        outlines [ (4, "#282828", 0, 0) ]    
-        
-    if decision_extra == True:
-
-        text choice3_text at tr_decision(0.4):
-            text_align 0.5 xanchor 0.5 ypos 0.69
+            action (Hide("decision"),Jump(item[1]))
+            
+        text item[0] at tr_decision(0.2*menu_choices.index(item)):
+            text_align 0.5 xanchor 0.5 ypos pointBase+0.04 +(0.15*menu_choices.index(item))
             size 40
-            outlines [ (4, "#282828", 0, 0) ]    
+            outlines [ (4, "#282828", 0, 0) ]  
 
 
 ##############################################################################
@@ -209,12 +204,15 @@ screen main_menu:
 
     add "UI/mainmenu_back.jpg" at tr_fadein(0.2)
 
-
     text "[config.name] V[config.version]" font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 25 size 15 color "F7F7F7"
 
-    if CENSOR == False:
+    if CENSOR == False and CENSOR_ver == 3:
 
         text 'DENPA EDITION' font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 50 size 15 color "F7F7F7"
+        
+    if CENSOR == False and CENSOR_ver < 3:
+
+        text 'DENPA MOD OUT OF DATE' font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 50 size 15 color "F7F7F7"
 
     if CENSOR == True:
 
@@ -226,7 +224,7 @@ screen main_menu:
         hover tr_hoverglow("UI/mainmenu_button.png")
         hover_sound "sound/hover1.ogg"
         activate_sound "sound/button1.ogg"
-        action Hide("main_menu"),Show("history")
+        action Hide("main_menu"),Show("main_menu_REturn")
     add "UI/mainmenu_start.png" at tr_menubutton(0.5,1920):
         xpos 2300 ypos 422 xanchor 531
 
@@ -270,14 +268,140 @@ screen main_menu:
     add "UI/mainmenu_quit.png" at tr_menubutton(0.9,1920):
         xpos 2300 ypos 718 xanchor 531   
 
-    add "UI/mainmenu_ava.png" xpos -200 at tr_menubutton(0.5,0)
-    add "UI/mainmenu_sola.png" xpos -200 at tr_menubutton(0.6,0)
-    add "UI/mainmenu_claude.png" xpos -200 at tr_menubutton(0.8,0)
-    add "UI/mainmenu_cosette.png" xpos -200 at tr_menubutton(0.7,0)
-    add "UI/mainmenu_chigara.png" xpos -200 at tr_menubutton(0.9,0)
-    add "UI/mainmenu_kryscari.png" xpos -200 at tr_menubutton(1,0)
-    add "UI/mainmenu_asaga.png" xpos -200 at tr_menubutton(1.1,0)
-    add "UI/mainmenu_logo.png" xpos -200 ypos 0 at tr_menubutton(0.3,0)
+    add "UI/mainmenu_ava.png" xpos -200 at tr_menubutton_onshow(0.5,0)
+    add "UI/mainmenu_sola.png" xpos -200 at tr_menubutton_onshow(0.6,0)
+    add "UI/mainmenu_claude.png" xpos -200 at tr_menubutton_onshow(0.8,0)
+    add "UI/mainmenu_cosette.png" xpos -200 at tr_menubutton_onshow(0.7,0)
+    add "UI/mainmenu_chigara.png" xpos -200 at tr_menubutton_onshow(0.9,0)
+    add "UI/mainmenu_kryscari.png" xpos -200 at tr_menubutton_onshow(1,0)
+    add "UI/mainmenu_asaga.png" xpos -200 at tr_menubutton_onshow(1.1,0)
+    add "UI/mainmenu_logo.png" xpos -200 ypos 0 at tr_menubutton_onshow(0.3,0)
+    
+screen main_menu_REturn():
+    zorder 600
+    add "UI/black.jpg"
+    add "UI/mainmenu_back.jpg"
+    text "[config.name] V[config.version]" font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 25 size 15 color "F7F7F7"
+    if CENSOR == False:
+        text 'DENPA EDITION' font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 50 size 15 color "F7F7F7"
+    if CENSOR == True:
+        text 'STEAM EDITION' font "Fonts/SourceCodePro-Regular.ttf" xpos 50 ypos 50 size 15 color "F7F7F7"
+    
+    add "UI/mainmenu_ava.png" at tr_menubutton_onhide(0.5,0)
+    add "UI/mainmenu_sola.png"  at tr_menubutton_onhide(0.6,0)
+    add "UI/mainmenu_claude.png"  at tr_menubutton_onhide(0.8,0)
+    add "UI/mainmenu_cosette.png" at tr_menubutton_onhide(0.7,0)
+    add "UI/mainmenu_chigara.png" at tr_menubutton_onhide(0.9,0)
+    add "UI/mainmenu_kryscari.png" at tr_menubutton_onhide(1,0)
+    add "UI/mainmenu_asaga.png" at tr_menubutton_onhide(1.1,0)
+    add "UI/mainmenu_logo.png" at tr_menubutton_onhide(0.3,0)
+    
+    imagebutton at tr_menubutton(0.5,1920):
+        xpos 2820 ypos 422 xanchor 810
+        idle "UI/mainmenu_button.png"
+        hover tr_hoverglow("UI/mainmenu_button.png")
+        hover_sound "sound/hover1.ogg"
+        activate_sound "sound/button1.ogg"
+        action Hide("main_menu_REturn"),Show("history")
+    add "REturn/UI/ui_mainbutton.png" at tr_menubutton(0.5,1920):
+        xpos 2300 ypos 422 xanchor 531    
+        
+    $RE_action = NullAction()
+    $RE_hover = tr_inactive("UI/mainmenu_button.png")
+    $RE_idle = tr_inactive("UI/mainmenu_button.png")
+    $RE_hover_sound = None
+    $RE_label = tr_inactive("REturn/UI/ui_returnbutton.png")
+    if get_game_cleared() or store.libday_mp.legion_destroyed is not None:
+        $RE_action = Hide("main_menu_REturn"),Show("REturn_menu")
+        $RE_hover = tr_hoverglow("UI/mainmenu_button.png")
+        $RE_idle = "UI/mainmenu_button.png"
+        $RE_hover_sound = "sound/hover1.ogg"
+        $RE_label = "REturn/UI/ui_returnbutton.png"
+    
+    imagebutton at tr_menubutton(0.6,1920):
+        xpos 2820 ypos 496 xanchor 810
+        idle RE_idle
+        hover RE_hover
+        hover_sound RE_hover_sound
+        activate_sound "sound/button1.ogg"
+        action RE_action
+    add RE_label at tr_menubutton(0.6,1920):
+        xpos 2300 ypos 496 xanchor 531
+
+    imagebutton at tr_menubutton(0.7,1920):
+        xpos 2820 ypos 570 xanchor 810
+        idle "UI/mainmenu_button.png"
+        hover tr_hoverglow("UI/mainmenu_button.png")
+        hover_sound "sound/hover1.ogg"
+        activate_sound "sound/button1.ogg"
+        action Hide("main_menu_REturn"),Show("main_menu")
+    add "REturn/UI/ui_back.png" at tr_menubutton(0.7,1920):
+        xpos 2300 ypos 570 xanchor 531
+        
+screen REturn_menu():
+    zorder 500
+    add "UI/mainmenu_back.jpg"
+    add "REturn/UI/ui_endingslist.png" at tr_fadein(1):
+        xpos 375 ypos 107
+    
+    imagebutton at tr_fadein(1):
+        xpos 1030 ypos 128
+        idle "REturn/UI/ui_start.png"
+        hover tr_hoverglow("REturn/UI/ui_start.png")
+        hover_sound "sound/hover1.ogg"
+        activate_sound "sound/button1.ogg"
+        action Hide("REturn_menu"),Start("dlc_prologue")
+    
+    imagebutton at tr_fadein(1):
+        xpos 1333 ypos 127
+        idle "UI/back.png"
+        hover tr_hoverglow("UI/back.png")
+        hover_sound "sound/hover1.ogg"
+        activate_sound "sound/button1.ogg"
+        action Hide("REturn_menu"),Show("main_menu")
+        
+    $endings_list = persistent.unlocked_endings.keys()
+    $endings_list.sort()
+    $unlocked_endings_count = 0
+    
+    frame:
+        at tr_fadein(1)
+        area (430,420,980,700)
+        background None
+        grid 2 9:
+            spacing 10
+            for ending in endings_list:
+                fixed:
+                    xmaximum 516
+                    ymaximum 40
+                    
+                    if persistent.unlocked_endings[ending] is False:
+                        add "REturn/UI/ui_lockedend.png"
+                        text "Locked" xanchor 0.5 xpos 258 color "000"
+                    else:
+                        $unlocked_endings_count+=1
+                        if "BAD" in ending:
+                            $ending_frame = "REturn/UI/ui_badend.png"
+                        elif "HAPPY" in ending:
+                            $ending_frame = "REturn/UI/ui_happyend.png"
+                        else:
+                            $ending_frame = "REturn/UI/ui_normalend.png"
+                        
+                        $save_name = ending.split(":")[0]
+                        if renpy.can_load(save_name):
+                            imagebutton:
+                                idle ending_frame
+                                hover tr_hoverglow(ending_frame)
+                                hover_sound "sound/hover1.ogg"
+                                activate_sound "sound/button1.ogg"
+                                action Function(renpy.load,save_name) 
+                        else:
+                            add ending_frame
+                        
+                        text ending xanchor 0.5 yanchor 0.5 xpos 258 ypos 20 color "000" size 20
+    
+    text str(int(unlocked_endings_count/18.0*100))+"%" xanchor 0.5 yanchor 0.5 xpos 1240 ypos 910 size 50
+        
 
 ##############################################################################
 # Navigation
@@ -996,8 +1120,7 @@ init -2:
         selected_hover_color "#cc0"
         insensitive_color "#4448"
 
-screen history():
-    
+screen history:
     zorder 500
     
     add "UI/mainmenu_back.jpg"
@@ -1022,1689 +1145,78 @@ screen history():
         hover_sound "sound/hover1.ogg"
         activate_sound "sound/button1.ogg"
         action SetVariable("customstat",False),Start()
-    
+
     frame at tr_fadein(1):
         area (425, 207, 2000, 740)
         background None
-
         viewport id "history_box":
             draggable False
             mousewheel True
-            child_size (1800,1380)
-            
+            child_size (1800,25+(optpoint*41))
             frame at tr_fadein(1):
-                
                 background None
-                        
-                imagebutton:
-                    xpos 10 ypos 10
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"瑟拉沦陷后，你选择采用怎样的旗帜？"),SetVariable("httx",10),SetVariable("htty",10)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 10
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你告诉艾瓦太阳骑士号永远采用瑟拉军的旗帜。"),SetVariable("httx",430),SetVariable("htty",10)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_ceraflag",True)
-                    activate_sound "sound/button1.ogg"                    
-                    
-                imagebutton:
-                    xpos 740 ypos 10
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你告诉艾瓦当一艘海盗船也不错。"),SetVariable("httx",740),SetVariable("htty",10)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_ceraflag",False)
-                    activate_sound "sound/button1.ogg"                        
-                        
-                imagebutton:
-                    xpos 10 ypos 50
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"十年后的再会，你如何对待艾瓦？"),SetVariable("httx",10),SetVariable("htty",50)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 50
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你用正式的态度对待她。"),SetVariable("httx",430),SetVariable("htty",50)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_professionalreunion",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 50
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你告诉艾瓦就像昨日重现。"),SetVariable("httx",740),SetVariable("htty",50)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_professionalreunion",False)
-                    activate_sound "sound/button1.ogg"
-                        
-                imagebutton:
-                    xpos 10 ypos 90
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"阿萨嘉登船时你支持了谁？"),SetVariable("httx",10),SetVariable("htty",90)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 90
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你让阿萨嘉不必拘谨。"),SetVariable("httx",430),SetVariable("htty",90)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_loosenrule",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 90
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你同意艾瓦遵守规章。"),SetVariable("httx",740),SetVariable("htty",90)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_loosenrule",False)
-                    activate_sound "sound/button1.ogg"
-                        
-                imagebutton:
-                    xpos 10 ypos 130
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"第一次额外任务你选择了哪里？"),SetVariable("httx",10),SetVariable("htty",130)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 130
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你攻击了PACT通讯中枢。"),SetVariable("httx",430),SetVariable("htty",130)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_pactspire",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 130
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你阻止了人贩子。"),SetVariable("httx",740),SetVariable("htty",130)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_pactspire",False)
-                    activate_sound "sound/button1.ogg"
-                        
-                if his_pactspire == False:
-                        
-                    imagebutton:
-                        xpos 10 ypos 170
-                        idle "UI/input_plotback.png"
-                        hover "UI/input_plotback.png"
-                        action NullAction()
-                        hovered htt.Action(u"你如何处置那些人贩子？"),SetVariable("httx",10),SetVariable("htty",170)
-                        unhovered SetVariable("htty",-5000)
-                        activate_sound "sound/button1.ogg"
-                    
-                    imagebutton:
-                        xpos 430 ypos 170
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        hovered htt.Action(u"你把他们捉住交给了当局。"),SetVariable("httx",430),SetVariable("htty",170)
-                        unhovered SetVariable("htty",-5000)
-                        action SetVariable("his_capturetraffickers",True)
-                        activate_sound "sound/button1.ogg"
 
-                    imagebutton:
-                        xpos 740 ypos 170
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        hovered htt.Action(u"你让他们漂流至死。"),SetVariable("httx",740),SetVariable("htty",170)
-                        unhovered SetVariable("htty",-5000)
-                        action SetVariable("his_capturetraffickers",False)
-                        activate_sound "sound/button1.ogg"
+                for item in setoptions[:]:
+                    if item[0] == 1: # Is an option title
+                        if eval(item[3]):
+                            imagebutton at tr_fadein(0.2):
+                                xpos optionsxpos[setoptions.index(item)] ypos optionsypos[setoptions.index(item)]
+                                idle "UI/input_plotback.png"
+                                hover "UI/input_plotback.png"
+                                action NullAction()
+                                
+                                hovered htt.Action(item[2]), SetVariable("httx",optionsxpos[setoptions.index(item)]), SetVariable("htty",optionsypos[setoptions.index(item)])
+                                
+                                unhovered SetVariable("htty",-5000)
+                                activate_sound "sound/button1.ogg"
 
-                if his_pactspire != False:
-                        
-                    imagebutton:
-                        xpos 10 ypos 170
-                        idle "UI/input_plotback.png"
-                        hover "UI/input_plotback.png"
-                        action None
-                        unhovered SetVariable("htty",-5000)
-                        activate_sound "sound/button1.ogg"
-                    
-                    imagebutton:
-                        xpos 430 ypos 170
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        unhovered SetVariable("htty",-5000)
-                        action None
-                        activate_sound "sound/button1.ogg"
-                        
-                    imagebutton:
-                        xpos 740 ypos 170
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        unhovered SetVariable("htty",-5000)
-                        action None
-                        activate_sound "sound/button1.ogg"
+                            text item[1]:
+                                xpos 10+25 ypos optionsypos[setoptions.index(item)]+10
+                                font "NotoSansCJKsc-Regular.otf"
+                                size 20
+                                color "#F7F7F7"
+
+                    if item[0] == 2: # Is a pick able option
+                        if eval(item[3]):
+                            imagebutton:
+                                xpos optionsxpos[setoptions.index(item)] ypos optionsypos[setoptions.index(item)]
+                                idle "UI/input_decision.png"
+                                hover "UI/input_decision.png"
+                                selected_idle "UI/input_decision_select.png"
+                                selected_hover "UI/input_decision_select.png"
+                                
+                                hovered htt.Action(item[2]), SetVariable("httx",optionsxpos[setoptions.index(item)]), SetVariable("htty",optionsypos[setoptions.index(item)])
+                                
+                                unhovered SetVariable("htty",-5000)
+                                action SetVariable(item[4][0],item[4][1])
+                                activate_sound "sound/button1.ogg" 
+
+                            text item[1]:
+                                xpos optionsxpos[setoptions.index(item)]+25 ypos optionsypos[setoptions.index(item)]+10
+                                font "NotoSansCJKsc-Regular.otf"
+                                size 20
+                                color "#000000"
                             
-                imagebutton:
-                    xpos 10 ypos 210
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"联盟沃尔斯塔的外交官们怎样了？"),SetVariable("httx",10),SetVariable("htty",210)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 210
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你救了那些外交官。"),SetVariable("httx",430),SetVariable("htty",210)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_diplomatssaved",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 210
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"阿伽门农号沉没了。"),SetVariable("httx",740),SetVariable("htty",210)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_diplomatssaved",False)
-                    activate_sound "sound/button1.ogg"
-                      
-                imagebutton:
-                    xpos 10 ypos 250
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"解救年糕号时候的战术是？"),SetVariable("httx",10),SetVariable("htty",250)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 250
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"太空骑士突击解救年糕号。"),SetVariable("httx",430),SetVariable("htty",250)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_mochirescue",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 250
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"太空骑士保护太阳骑士号。"),SetVariable("httx",740),SetVariable("htty",250)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_mochirescue",False)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 10 ypos 290
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"发现科洛特是个骗子后你怎么做的？"),SetVariable("httx",10),SetVariable("htty",290)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 290
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你放了科洛特。"),SetVariable("httx",430),SetVariable("htty",290)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_claudesupport",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 290
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你把她关了起来。"),SetVariable("httx",740),SetVariable("htty",290)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_claudesupport",False)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 10 ypos 330
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"对切嘉拉隐瞒阿萨嘉真实身份的行为你如何对待？"),SetVariable("httx",10),SetVariable("htty",330)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 330
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你原谅了切嘉拉因为她想保护阿萨嘉。"),SetVariable("httx",430),SetVariable("htty",330)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_chigaraforgive",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 330
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你斥责了切嘉拉因为她让战舰处于危险。"),SetVariable("httx",740),SetVariable("htty",330)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_chigaraforgive",False)
-                    activate_sound "sound/button1.ogg"                    
-                    
-                imagebutton:
-                    xpos 10 ypos 370
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"阿萨嘉被带走后与索拉的对话你怎么说的？"),SetVariable("httx",10),SetVariable("htty",370)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 370
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你告诉索拉别做什么危险的事情。"),SetVariable("httx",430),SetVariable("htty",370)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_solacareful",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 370
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你告诉索拉干掉PACT。"),SetVariable("httx",740),SetVariable("htty",370)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_solacareful",False)
-                    activate_sound "sound/button1.ogg"                         
-                    
-                imagebutton:
-                    xpos 10 ypos 410
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"伊卡莉和科莉斯卡争论“凤凰”违反安全规范时你支持了谁？"),SetVariable("httx",10),SetVariable("htty",410)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 410
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持了伊卡莉，告诉科莉斯卡联盟的安全规范在这里不适用。"),SetVariable("httx",430),SetVariable("htty",410)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_noallianceregulations",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 410
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持了科莉斯卡，要求伊卡莉把“凤凰”改装得符合规范。"),SetVariable("httx",740),SetVariable("htty",410)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_noallianceregulations",False)
-                    activate_sound "sound/button1.ogg"   
-                    
-                imagebutton:
-                    xpos 10 ypos 450
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"切嘉拉因为阿卡迪乌斯而紧张的时候，你支持了谁？"),SetVariable("httx",10),SetVariable("htty",450)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 450
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持了阿萨嘉，让切嘉拉勇敢些。"),SetVariable("httx",430),SetVariable("htty",450)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_cafeteriaasaga",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 450
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持了切嘉拉，告诉阿萨嘉不是每个人都那么勇敢。"),SetVariable("httx",740),SetVariable("htty",450)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_cafeteriaasaga",False)
-                    activate_sound "sound/button1.ogg"                       
-                    
-                imagebutton:
-                    xpos 10 ypos 490
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"当和伊卡莉讨论名声的时候，你怎么想的？"),SetVariable("httx",10),SetVariable("htty",490)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 490
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你对名声没有兴趣。"),SetVariable("httx",430),SetVariable("htty",490)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_notinterestedinfame",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 490
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你要利用这名声集结力量对抗PACT。"),SetVariable("httx",740),SetVariable("htty",490)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_notinterestedinfame",False)
-                    activate_sound "sound/button1.ogg"                          
-                    
-                imagebutton:
-                    xpos 10 ypos 530
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"远地港战斗前，你怎么看待联盟？"),SetVariable("httx",10),SetVariable("htty",530)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 530
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你怀疑联盟。"),SetVariable("httx",430),SetVariable("htty",530)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_beforefarportsuspectalliance",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 530
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你信任联盟。"),SetVariable("httx",740),SetVariable("htty",530)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_beforefarportsuspectalliance",False)
-                    activate_sound "sound/button1.ogg"      
-                    
-                imagebutton:
-                    xpos 10 ypos 570
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"和切嘉拉讨论到悖论核心的时候你是怎么说的？"),SetVariable("httx",10),SetVariable("htty",570)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 570
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你说这种科技被滥用很危险。"),SetVariable("httx",430),SetVariable("htty",570)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_techdangerous",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 570
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你说这种科技用处很大。"),SetVariable("httx",740),SetVariable("htty",570)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_techdangerous",False)
-                    activate_sound "sound/button1.ogg"                          
-                    
-                imagebutton:
-                    xpos 10 ypos 610
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你在海滩和谁聊了？"),SetVariable("httx",10),SetVariable("htty",570)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 610
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",1)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 610
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",2)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 430 ypos 650
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",3)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 650
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",4)
-                    activate_sound "sound/button1.ogg"
+                            if htt.value != "":
+                                frame: # Frame matches required size, MAGIC!
+                                    xpos httx+200 ypos htty+20
+                                    background "#000000"
+                                    text htt.value:
+                                        font "NotoSansCJKsc-Regular.otf"
+                                        size 20
+                                        color "#F7F7F7"
+                                    
+                vbar value YScrollValue("history_box") xpos 1070
 
-                imagebutton:
-                    xpos 430 ypos 690
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",5)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 690
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    action SetVariable("his_beach1",6)
-                    activate_sound "sound/button1.ogg"
-
-                imagebutton:
-                    xpos 10 ypos 730
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你在海滩和谁聊了？"),SetVariable("httx",10),SetVariable("htty",730)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                if his_beach1 != 1:
-                
-                    imagebutton:
-                        xpos 430 ypos 730
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",1)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 2:
-                        
-                    imagebutton:
-                        xpos 740 ypos 730
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",2)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 3:
-                        
-                    imagebutton:
-                        xpos 430 ypos 770
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",3)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 4:
-                        
-                    imagebutton:
-                        xpos 740 ypos 770
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",4)
-                        activate_sound "sound/button1.ogg"
-
-                if his_beach1 != 5:
-
-                    imagebutton:
-                        xpos 430 ypos 810
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",5)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 6:
-                        
-                    imagebutton:
-                        xpos 740 ypos 810
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach2",6)
-                        activate_sound "sound/button1.ogg"
-                        
-                imagebutton:
-                    xpos 10 ypos 850
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你在海滩和谁聊了？"),SetVariable("httx",10),SetVariable("htty",850)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                if his_beach1 != 1 and his_beach2 != 1:
-                
-                    imagebutton:
-                        xpos 430 ypos 850
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",1)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 2 and his_beach2 != 2:
-                        
-                    imagebutton:
-                        xpos 740 ypos 850
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",2)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 3 and his_beach2 != 3:
-                        
-                    imagebutton:
-                        xpos 430 ypos 890
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",3)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 4 and his_beach2 != 4:
-                        
-                    imagebutton:
-                        xpos 740 ypos 890
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",4)
-                        activate_sound "sound/button1.ogg"
-
-                if his_beach1 != 5 and his_beach2 != 5:
-
-                    imagebutton:
-                        xpos 430 ypos 930
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",5)
-                        activate_sound "sound/button1.ogg"
-                        
-                if his_beach1 != 6 and his_beach2 != 6:
-                        
-                    imagebutton:
-                        xpos 740 ypos 930
-                        idle "UI/input_decision.png"
-                        hover "UI/input_decision.png"
-                        selected_idle "UI/input_decision_select.png"
-                        selected_hover "UI/input_decision_select.png"
-                        action SetVariable("his_beach3",6)
-                        activate_sound "sound/button1.ogg"
-                        
-                        
-                imagebutton:
-                    xpos 10 ypos 970
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"索拉告诉你她母亲的故事时，你怎么说的？"),SetVariable("httx",10),SetVariable("htty",970)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 970
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"她母亲相信王子会娶她太幼稚了。"),SetVariable("httx",430),SetVariable("htty",970)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_mothernaive",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 970
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你很同情她母亲。"),SetVariable("httx",740),SetVariable("htty",970)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_mothernaive",False)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 10 ypos 1010
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"索拉告诉你她的身世后，你怎么说的？"),SetVariable("httx",10),SetVariable("htty",1010)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1010
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你发誓永远不会牺牲她。"),SetVariable("httx",430),SetVariable("htty",1010)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_solaprotect",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1010
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你说她为了人民牺牲非常勇敢。"),SetVariable("httx",740),SetVariable("htty",1010)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_solaprotect",False)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 10 ypos 1050
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你如何处置成为了海盗的前瑟拉军成员？"),SetVariable("httx",10),SetVariable("htty",1050)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1050
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你接纳了他们，让他们在太阳骑士号上工作。"),SetVariable("httx",430),SetVariable("htty",1050)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_acquitteddeserters",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1050
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你军法处置了他们。"),SetVariable("httx",740),SetVariable("htty",1050)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_acquitteddeserters",False)
-                    activate_sound "sound/button1.ogg"                    
-                    
-                imagebutton:
-                    xpos 10 ypos 1090
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你留下了愿望机吗？"),SetVariable("httx",10),SetVariable("htty",1090)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1090
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你卖了10 000元。"),SetVariable("httx",430),SetVariable("htty",1090)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_soldwishall",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1090
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你保留了愿望机。"),SetVariable("httx",740),SetVariable("htty",1090)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_soldwishall",False)
-                    activate_sound "sound/button1.ogg"
-                                        
-                imagebutton:
-                    xpos 10 ypos 1130
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"联盟选举你支持谁？"),SetVariable("httx",10),SetVariable("htty",1130)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1130
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持格雷上将。"),SetVariable("httx",430),SetVariable("htty",1130)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_backgrey",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1130
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你希望权力留在平民政府手中。"),SetVariable("httx",740),SetVariable("htty",1130)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_backgrey",False)
-                    activate_sound "sound/button1.ogg"                            
-                    
-                imagebutton:
-                    xpos 10 ypos 1170
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"视察昂格斯的贫民窟后，你支持谁？"),SetVariable("httx",10),SetVariable("htty",1170)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1170
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持联盟的救济计划。"),SetVariable("httx",430),SetVariable("htty",1170)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_supportrelief",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1170
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持中立星缘的独立。"),SetVariable("httx",740),SetVariable("htty",1170)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_supportrelief",False)
-                    activate_sound "sound/button1.ogg"                      
-                    
-                imagebutton:
-                    xpos 10 ypos 1210
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"对解救你造成的平民伤亡你如何反应？"),SetVariable("httx",10),SetVariable("htty",1210)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1210
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你向媒体披露了这次事件。"),SetVariable("httx",430),SetVariable("htty",1210)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_gotopress",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1210
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你隐瞒了这次事件。"),SetVariable("httx",740),SetVariable("htty",1210)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_gotopress",False)
-                    activate_sound "sound/button1.ogg"                            
-                    
-                imagebutton:
-                    xpos 10 ypos 1250
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"昂格斯事件后你支持联盟吗？"),SetVariable("httx",10),SetVariable("htty",1250)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1250
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持联盟。"),SetVariable("httx",430),SetVariable("htty",1250)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_backalliance",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1250
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你认为联盟不能信任。"),SetVariable("httx",740),SetVariable("htty",1250)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_backalliance",False)
-                    activate_sound "sound/button1.ogg"                        
-                    
-                imagebutton:
-                    xpos 10 ypos 1290
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"格雷上将向方特纳威胁夷平昂格斯时你如何反应？"),SetVariable("httx",10),SetVariable("htty",1290)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1290
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你支持上将。"),SetVariable("httx",430),SetVariable("htty",1290)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_suppportnuke",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1290
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你反对上将。"),SetVariable("httx",740),SetVariable("htty",1290)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_suppportnuke",False)
-                    activate_sound "sound/button1.ogg"                              
-                    
-                imagebutton:
-                    xpos 10 ypos 1330
-                    idle "UI/input_plotback.png"
-                    hover "UI/input_plotback.png"
-                    action NullAction()
-                    hovered htt.Action(u"你让艾瓦去发射先锋火炮了吗？"),SetVariable("httx",10),SetVariable("htty",1330)
-                    unhovered SetVariable("htty",-5000)
-                    activate_sound "sound/button1.ogg"
-                
-                imagebutton:
-                    xpos 430 ypos 1330
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"艾瓦发射了先锋火炮，击沉了军团号。"),SetVariable("httx",430),SetVariable("htty",1330)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_legionsank",True)
-                    activate_sound "sound/button1.ogg"
-                    
-                imagebutton:
-                    xpos 740 ypos 1330
-                    idle "UI/input_decision.png"
-                    hover "UI/input_decision.png"
-                    selected_idle "UI/input_decision_select.png"
-                    selected_hover "UI/input_decision_select.png"
-                    hovered htt.Action(u"你让艾瓦留在舰桥，军团号存活。"),SetVariable("httx",740),SetVariable("htty",1330)
-                    unhovered SetVariable("htty",-5000)
-                    action SetVariable("his_legionsank",False)
-                    activate_sound "sound/button1.ogg"    
-
-
-                    
-            frame at tr_fadein(0):
-
-                background None
-                xpos 25 ypos 6
-                
-                text u"旗帜":
-                    xpos 10 ypos 10
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"瑟拉军":
-                    xpos 430 ypos 10
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"海盗船":
-                    xpos 740 ypos 10
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"与艾瓦重逢":
-                    xpos 10 ypos 50
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"公事公办":
-                    xpos 430 ypos 50
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"回忆往昔":
-                    xpos 740 ypos 50
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"军事规章":
-                    xpos 10 ypos 90
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"适当通融":
-                    xpos 430 ypos 90
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"严格执行":
-                    xpos 740 ypos 90
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"第一次任务":
-                    xpos 10 ypos 130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"PACT通讯中枢":
-                    xpos 430 ypos 130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"人贩子":
-                    xpos 740 ypos 130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                if his_pactspire == False:
-
-                    text u"人贩子的处置":
-                        xpos 10 ypos 170
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#F7F7F7"
-                    
-                    text u"活捉":
-                        xpos 430 ypos 170
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                    text u"杀死":
-                        xpos 740 ypos 170
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_pactspire != False:
-
-                    text u"（跳过）":
-                        xpos 10 ypos 170
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#F7F7F7"
-                        
-                text u"沃尔斯塔外交官":
-                    xpos 10 ypos 210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"救出":
-                    xpos 430 ypos 210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"死亡":
-                    xpos 740 ypos 210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"                        
-
-                text u"解救年糕号":
-                    xpos 10 ypos 250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"全军突击":
-                    xpos 430 ypos 250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"稳固防守":
-                    xpos 740 ypos 250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"医疗事故":
-                    xpos 10 ypos 290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"放了科洛特":
-                    xpos 430 ypos 290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"关押科洛特":
-                    xpos 740 ypos 290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"切嘉拉的道歉":
-                    xpos 10 ypos 330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"原谅切嘉拉":
-                    xpos 430 ypos 330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"批评切嘉拉":
-                    xpos 740 ypos 330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"与索拉的对话":
-                    xpos 10 ypos 370
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"注意安全":
-                    xpos 430 ypos 370
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"干掉PACT":
-                    xpos 740 ypos 370
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"安全规章":
-                    xpos 10 ypos 410
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"支持伊卡莉":
-                    xpos 430 ypos 410
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"支持科莉斯卡":
-                    xpos 740 ypos 410
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"餐厅谈话":
-                    xpos 10 ypos 450
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"支持阿萨嘉":
-                    xpos 430 ypos 450
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"支持切嘉拉":
-                    xpos 740 ypos 450
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"        
-
-                text u"关于名声":
-                    xpos 10 ypos 490
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"不在乎":
-                    xpos 430 ypos 490
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"用来对抗PACT":
-                    xpos 740 ypos 490
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-
-                text u"关于联盟":
-                    xpos 10 ypos 530
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"不信任":
-                    xpos 430 ypos 530
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"信任":
-                    xpos 740 ypos 530
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-
-                text u"悖论计划":
-                    xpos 10 ypos 570
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"危险":
-                    xpos 430 ypos 570
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"有用":
-                    xpos 740 ypos 570
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-
-                text u"海滩事件1":
-                    xpos 10 ypos 610
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"阿萨嘉":
-                    xpos 430 ypos 610
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"切嘉拉":
-                    xpos 740 ypos 610
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"艾瓦":
-                    xpos 430 ypos 650
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"伊卡莉和科莉斯卡":
-                    xpos 740 ypos 650
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"科洛特":
-                    xpos 430 ypos 690
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"索拉":
-                    xpos 740 ypos 690
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"海滩事件2":
-                    xpos 10 ypos 730
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                if his_beach1 != 1:
-                
-                    text u"阿萨嘉":
-                        xpos 430 ypos 730
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_beach1 != 2:
-                        
-                    text u"切嘉拉":
-                        xpos 740 ypos 730
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"    
-                        
-                if his_beach1 != 3:
-                        
-                    text u"艾瓦":
-                        xpos 430 ypos 770
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_beach1 != 4:
-                        
-                    text u"伊卡莉和科莉斯卡":
-                        xpos 740 ypos 770
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"    
-                        
-                if his_beach1 != 5:
-                        
-                    text u"科洛特":
-                        xpos 430 ypos 810
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_beach1 != 6:
-                        
-                    text u"索拉":
-                        xpos 740 ypos 810
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"  
-                    
-                text "海滩事件3":
-                    xpos 10 ypos 850
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                    
-                if his_beach1 != 1 and his_beach2 != 1:
-                
-                    text u"阿萨嘉":
-                        xpos 430 ypos 850
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_beach1 != 2 and his_beach2 != 2:
-                        
-                    text u"切嘉拉":
-                        xpos 740 ypos 850
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"    
-                        
-                if his_beach1 != 3 and his_beach2 != 3:
-                        
-                    text u"艾瓦":
-                        xpos 430 ypos 890
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                if his_beach1 != 4 and his_beach2 != 4:
-                        
-                    text u"伊卡莉和科莉斯卡":
-                        xpos 740 ypos 890
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"    
-                        
-                if his_beach1 != 5 and his_beach2 != 5:
-                        
-                    text u"科洛特":
-                        xpos 430 ypos 930
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-
-                if his_beach1 != 6 and his_beach2 != 6:
-
-                    text u"索拉":
-                        xpos 740 ypos 930
-                        font "NotoSansCJKsc-Regular.otf"
-                        size 20
-                        color "#000000"
-                        
-                text u"索拉的母亲":
-                    xpos 10 ypos 970
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"幼稚":
-                    xpos 430 ypos 970
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"同情":
-                    xpos 740 ypos 970
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"索拉的过去":
-                    xpos 10 ypos 1010
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"保护她":
-                    xpos 430 ypos 1010
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"她很勇敢":
-                    xpos 740 ypos 1010
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"瑟拉逃兵":
-                    xpos 10 ypos 1050
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"接纳":
-                    xpos 430 ypos 1050
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"处决":
-                    xpos 740 ypos 1050
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"愿望机":
-                    xpos 10 ypos 1090
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"用掉":
-                    xpos 430 ypos 1090
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"保留":
-                    xpos 740 ypos 1090
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"联盟选举":
-                    xpos 10 ypos 1130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"格雷上将":
-                    xpos 430 ypos 1130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"平民政府":
-                    xpos 740 ypos 1130
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"关于昂格斯贫民窟":
-                    xpos 10 ypos 1170
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"联盟救济":
-                    xpos 430 ypos 1170
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"独立自主":
-                    xpos 740 ypos 1170
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"死伤事件":
-                    xpos 10 ypos 1210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"披露":
-                    xpos 430 ypos 1210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"隐瞒":
-                    xpos 740 ypos 1210
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"关于联盟":
-                    xpos 10 ypos 1250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"信任":
-                    xpos 430 ypos 1250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"怀疑":
-                    xpos 740 ypos 1250
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"格雷的赌博":
-                    xpos 10 ypos 1290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"支持":
-                    xpos 430 ypos 1290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"反对":
-                    xpos 740 ypos 1290
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"    
-                    
-                text u"军团号":
-                    xpos 10 ypos 1330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-                
-                text u"沉没":
-                    xpos 430 ypos 1330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-                text u"存活":
-                    xpos 740 ypos 1330
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#000000"
-                    
-            frame:
-                
-                background "#000000"
-                xpos httx+200 ypos htty-history_box+20
-            
-                text htt.value:
-                    font "NotoSansCJKsc-Regular.otf"
-                    size 20
-                    color "#F7F7F7"
-
-        vbar value YScrollValue("history_box") xpos 1070
-        
-    if his_ceraflag != None and his_professionalreunion != None and his_loosenrule != None and his_pactspire == True and his_diplomatssaved != None and his_mochirescue != None and his_claudesupport != None and his_chigaraforgive != None and his_solacareful != None and his_noallianceregulations != None and his_cafeteriaasaga != None and his_notinterestedinfame != None and his_beforefarportsuspectalliance != None and his_techdangerous != None and his_beach1 != None and his_beach2 != None and his_beach3 != None and his_mothernaive != None and his_solaprotect != None and his_acquitteddeserters != None and his_soldwishall != None and his_backgrey != None and his_supportrelief != None and his_gotopress != None and his_backalliance != None and his_suppportnuke != None and his_legionsank != None and validate_beach_decision():
-        
-        imagebutton at tr_fadein(0):
+    if show_confirm():
+        imagebutton at tr_fadein(0.2):
             xpos 805 ypos 125
             idle "UI/confirm.png"
             hover tr_hoverglow("UI/confirm.png")
             hover_sound "sound/hover1.ogg"
             activate_sound "sound/ButtonClick.ogg"
-            action SetVariable("customstat",True),Start()
+            action SetVariable("customstat",True), Hide("history") ,Start()
 
-    if his_ceraflag != None and his_professionalreunion != None and his_loosenrule != None and his_pactspire == False and his_capturetraffickers != None and his_diplomatssaved != None and his_mochirescue != None and his_claudesupport != None and his_chigaraforgive != None and his_solacareful != None and his_noallianceregulations != None and his_cafeteriaasaga != None and his_notinterestedinfame != None and his_beforefarportsuspectalliance != None and his_techdangerous != None and his_beach1 != None and his_beach2 != None and his_beach3 != None and his_mothernaive != None and his_solaprotect != None and his_acquitteddeserters != None and his_soldwishall != None and his_backgrey != None and his_supportrelief != None and his_gotopress != None and his_backalliance != None and his_suppportnuke != None and his_legionsank != None and validate_beach_decision():
-        
-        imagebutton at tr_fadein(0):
-            xpos 805 ypos 125
-            idle "UI/confirm.png"
-            hover tr_hoverglow("UI/confirm.png")
-            hover_sound "sound/hover1.ogg"
-            activate_sound "sound/ButtonClick.ogg"
-            action SetVariable("customstat",True),Start()
     
 screen prolog:
     
@@ -3197,21 +1709,21 @@ screen gallery_charactercg:
         area (245,265,980,700)
         background None
         
-        viewport:
-            draggable True
-            mousewheel True
-            scrollbars "vertical"
-            child_size (920,2200)
+        if CENSOR == True:
         
-            grid 3 13:
-                
-                xfill True
-                yfill True
+            viewport:
+                draggable True
+                mousewheel True
+                scrollbars "vertical"
+                child_size (920,2369)
+                    
+                grid 3 14:
+                    
+                    xfill True
+                    yfill True
 
-                # Call make_button to show a particular button.
-                
-                if CENSOR == True:
-                
+                    # Call make_button to show a particular button.
+                                    
                     add gallery.make_button("chcg1", "CG/thumbs/intro_helion.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                     add gallery.make_button("chcg2", "CG/thumbs/chigara_cockpit.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                     add gallery.make_button("chcg3", "CG/thumbs/lynn_cockpit.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
@@ -3261,11 +1773,25 @@ screen gallery_charactercg:
                     add gallery.make_button("chcg36", "CG/thumbs/standoff1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
 
                     add gallery.make_button("chcg37", "CG/thumbs/kaytoend1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
-                    add gallery.make_button("chcg39", "CG/thumbs/helives.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                     add gallery.make_button("chcg38", "CG/thumbs/despair.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    add gallery.make_button("chcg39", "CG/thumbs/helives.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
 
+                    add gallery.make_button("chcg40", "REturn/thumbs/cg_kaytopunch.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    text ""
+                    text "" 
 
-                if CENSOR == False:
+        if CENSOR == False:
+            
+            viewport:
+                draggable True
+                mousewheel True
+                scrollbars "vertical"
+                child_size (920,2538)
+                            
+                grid 3 15:
+                    
+                    xfill True
+                    yfill True
                     
                     add gallery.make_button("chcg1", "CG/thumbs/intro_helion.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                     add gallery.make_button("chcg2", "CG/thumbs/chigara_cockpit.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
@@ -3319,6 +1845,15 @@ screen gallery_charactercg:
                     add gallery.make_button("chcg38", "CG/thumbs/despair.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                     add gallery.make_button("chcg39", "CG/thumbs/helives.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
             
+                    add gallery.make_button("chcg40", "REturn/thumbs/cg_kaytopunch.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    add gallery.make_button("chcg41", "REturn_censored/thumbs/asaga_h1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    add gallery.make_button("chcg42", "REturn_censored/thumbs/ava_h1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                    add gallery.make_button("chcg43", "REturn_censored/thumbs/claude_h1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    add gallery.make_button("chcg44", "REturn_censored/thumbs/icari_h1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                    add gallery.make_button("chcg45", "REturn_censored/thumbs/sola_h1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+
 screen gallery_mechacg:
     
     tag page
@@ -3547,10 +2082,10 @@ screen gallery_backgrounds:
         viewport:
             draggable True
             mousewheel True
-            scrollbars "vertical"
-            child_size (920,1185)
+            scrollbars "ve-rtical"
+            child_size (920,2031)
         
-            grid 3 7:
+            grid 3 12:
                 
                 xfill True
                 yfill True
@@ -3582,3 +2117,23 @@ screen gallery_backgrounds:
                 add gallery.make_button("bg19", "Background/thumbs/cargohangar.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                 add gallery.make_button("bg20", "Background/thumbs/mindstream1.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
                 add gallery.make_button("bg21", "Background/thumbs/desert.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                add gallery.make_button("bg22", "REturn/thumbs/engineroom.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg23", "REturn/thumbs/tunnel.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg24", "REturn/thumbs/engineering.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                add gallery.make_button("bg25", "REturn/thumbs/reactor.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg26", "REturn/thumbs/xooffice.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg27", "REturn/thumbs/beach2_night.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                add gallery.make_button("bg28", "REturn/thumbs/city.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg29", "REturn/thumbs/hotelroom.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg30", "REturn/thumbs/park.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                add gallery.make_button("bg31", "REturn/thumbs/shrine.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg32", "REturn/thumbs/crewquarters.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                add gallery.make_button("bg33", "REturn/thumbs/room_day.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+
+                add gallery.make_button("bg34", "REturn/thumbs/observationdeck.jpg", locked="CG/thumbs/locked.jpg",hover_border="CG/thumbs/hover.png", idle_border=None, hover_sound="Sound/hover1.ogg",activate_sound="Sound/button1.ogg", background=None)
+                text ""
+                text ""

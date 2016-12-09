@@ -10,7 +10,7 @@ translate Chinese _call_initialize_90c2f4e2:
 translate Chinese _call_initialize_87861a75:
 
     # nar "You must finish Mask of Arcadius V7.2 and export a save file when prompted to import your data into Liberation Day."
-    nar "请先在“阿卡迪乌斯的面具”7.2版本下完成游戏，并在出现提示时导出存档文件至“独立日”"
+    nar "请先在“阿卡迪乌斯的面具”7.2版本下完成游戏，并在出现提示时导出存档文件至“解放日”"
 
 # game/script.rpy:66
 translate Chinese _call_beginstat_67c5abad:
@@ -7446,7 +7446,7 @@ translate Chinese sunriderwarpout_1ce61b74:
 translate Chinese sunriderwarpout_8a491327:
 
     # alp "You need not fear, my sister."
-    alp "不要害怕，我的姐妹。"
+    alp "不要害怕，我的姐姐。"
 
 # game/script.rpy:3374
 translate Chinese sunriderwarpout_4fdfdd2c:
@@ -7476,7 +7476,7 @@ translate Chinese sunriderwarpout_af82860c:
 translate Chinese sunriderwarpout_0e7d6398:
 
     # ali "My sister."
-    ali "我的姐妹。"
+    ali "我的妹妹。"
 
 # game/script.rpy:3379
 translate Chinese sunriderwarpout_3f849ecd:
@@ -10608,7 +10608,7 @@ translate Chinese newend_ef40f0df:
 translate Chinese newend_081dd722:
 
     # alp "My sister has failed..."
-    alp "我的姐妹失败了……"
+    alp "我的姐姐失败了……"
 
 # game/script.rpy:8116
 translate Chinese newend_c7398733:
@@ -10620,7 +10620,7 @@ translate Chinese newend_c7398733:
 translate Chinese newend_3f1ddcd3:
 
     # alp "I have... been betrayed. By my own sister."
-    alp "我……被背叛了。被我自己的姐妹。"
+    alp "我……被背叛了。被我自己的姐姐。"
 
 # game/script.rpy:8118
 translate Chinese newend_f654b445:
@@ -10884,7 +10884,7 @@ translate Chinese newend_d3de4c71:
 translate Chinese newend_41e95ef6:
 
     # alp "But my sister hid her true intent from me."
-    alp "但是我的姐妹向我隐瞒了真正的意图。"
+    alp "但是我的姐姐向我隐瞒了真正的意图。"
 
 # game/script.rpy:8205
 translate Chinese newend_a8add777:
@@ -10908,13 +10908,13 @@ translate Chinese newend_db6b9369:
 translate Chinese newend_65c78447:
 
     # cla "Aha, so you just wanted to enslave humanity, while your sister wanted to destroy it..."
-    cla "啊哈，所以你只是想要奴役人类，而你的姐妹想要摧毁他们……"
+    cla "啊哈，所以你只是想要奴役人类，而你的姐姐想要摧毁他们……"
 
 # game/script.rpy:8212
 translate Chinese newend_8302bee6:
 
     # alp "Now, my sister and C8 battle inside the mindstream for control of the other prototypes..."
-    alp "现在，我的姐妹和C8正在思维流里争夺其他原型的控制权……"
+    alp "现在，我的姐姐和C8正在思维流里争夺其他原型的控制权……"
 
 # game/script.rpy:8213
 translate Chinese newend_53b14c28:
@@ -11142,7 +11142,7 @@ translate Chinese newend_1d0c9e64:
 translate Chinese newend_5f5956b2:
 
     # alp "I will control humanity. Regardless of my sister's machinations."
-    alp "我要掌控人类，不论我的姐妹有着怎样的阴谋。"
+    alp "我要掌控人类，不论我的姐姐有着怎样的阴谋。"
 
 # game/script.rpy:8272
 translate Chinese newend_fb3b8918:
@@ -11190,7 +11190,7 @@ translate Chinese newend_2bec9d60:
 translate Chinese newend_a559778f:
 
     # alp "(My... sister.)"
-    alp "（我的……姐妹。）"
+    alp "（我的……姐姐。）"
 
 # game/script.rpy:8287
 translate Chinese newend_bf0330ad:
@@ -14922,7 +14922,7 @@ translate Chinese commanderunfairme_3d3c7cc3:
 translate Chinese commanderunfairme_f4405416:
 
     # sol "I believe the sole reason for Claude joining the crew of the Sunrider was to lead you to me."
-    sol "我认为科洛特加入太阳骑士号的原因是把你带到我这里。"
+    sol "我认为科洛特加入太阳骑士号的目的是把你带到我这里。"
 
 # game/script.rpy:9445
 translate Chinese commanderunfairme_39063cd4:
@@ -19844,7 +19844,7 @@ translate Chinese after_mission7_696d6715:
 translate Chinese after_mission7_ced02bb7:
 
     # cla "Hooaaahh!!!"
-    cla "霍啊啊啊！！！"
+    cla "嚯啊啊啊！！！"
 
 # game/script.rpy:5864
 translate Chinese after_mission7_d39d9053:
@@ -20186,7 +20186,7 @@ translate Chinese after_mission7_483560c4:
 translate Chinese after_mission7_4fefa281:
 
     # pro "My sister..."
-    pro "我的姐妹……"
+    pro "我的妹妹……"
 
 # game/script.rpy:5999
 translate Chinese after_mission7_fd4e1881:

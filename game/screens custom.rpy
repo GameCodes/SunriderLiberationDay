@@ -116,9 +116,10 @@ init -20:  ##0) transforms
         pause 2
         alpha 0
         
-    transform damage_float(yy):        
+    transform damage_float(yy,t=0):        
+        pause t
         ypos yy        
-        easein 2.0 ypos (yy - 100)
+        linear 2.0 ypos (yy - 100)
         
     transform tr_melee_animation():
         alpha 0
@@ -1020,7 +1021,12 @@ screen battle_screen():
                 $shiplist = BM.taking_damage
             
             for ship in shiplist:
-                $damage = shiplist[ship]
+                $energy_mitigation = 0
+                $armor_mitigation = 0
+                if type(shiplist[ship]) is tuple:
+                    $damage,energy_mitigation,armor_mitigation = shiplist[ship]
+                else:
+                    $damage = shiplist[ship]
                 $xposition = dispx(ship.location[0], ship.location[1],zoomlevel,0.50 * ADJX) + int(zoomlevel * MOVX)
                 $yposition = dispy(ship.location[0], ship.location[1],zoomlevel,0.25 * ADJY) + int(zoomlevel * MOVY)
                 $damage_color = 'c00'
@@ -1036,6 +1042,47 @@ screen battle_screen():
                         yanchor 0.5
                         size 40
                         color damage_color
+                        outlines [(2,'fff',0,0)]
+                
+                $delay_float_text = 0.2
+                $y_offset = 15
+                
+                if energy_mitigation > 0:
+                    # hbox:
+                        # at damage_float(yposition,delay_float_text)
+                        # xpos xposition
+                    add "Battle UI/icon_shield.png":
+                        zoom 0.5 
+                        xpos xposition 
+                        at damage_float(yposition+y_offset,delay_float_text)
+                        xanchor 0.5
+                        yanchor 0.5
+                    text "       "+str(energy_mitigation):
+                        at damage_float(yposition+y_offset,delay_float_text)
+                        xpos xposition
+                        xanchor 0.5
+                        yanchor 0.5
+                        size 20
+                        color '44F'
+                        outlines [(2,'fff',0,0)]
+                    $y_offset += 20
+                
+                if armor_mitigation > 0:
+                        
+                    add "Battle UI/icon_armor.png":
+                        at damage_float(yposition+y_offset,delay_float_text)
+                        zoom 0.5
+                        xpos xposition
+                        xanchor 0.5
+                        yanchor 0.5
+                    text "     "+str(armor_mitigation):
+                        at damage_float(yposition+y_offset,delay_float_text)
+                        xpos xposition
+                        xanchor 0.5
+                        yanchor 0.5
+                        ymaximum 50
+                        size 20
+                        color '444'
                         outlines [(2,'fff',0,0)]
 
         ##show +CMD message after something blows up.
@@ -1832,7 +1879,7 @@ screen tooltips:
             $ hovered_object = BM.buffhover
             $ xposition = -50
             $ x_anchor = 1.0
-            $ xpos_adjustment = 100
+            $ xpos_adjustment = -100
 
         if hovered_object.tooltip != None:
             frame:
@@ -2707,4 +2754,72 @@ screen achievement_toast(achievement):
                 add "Chivos/" + achievement.icon
                 text achievement.name
                 
+# screen find_sprite():
+    # default character = None
+    # default posture = None
+    
+    # modal True
+    
+    # textbutton "return":
+        # action [SetScreenVariable('character',None),SetScreenVariable('posture',None)]
+        # xalign 0.5
+        # yalign 0.0
+    # key 'r':
+        # action [SetScreenVariable('character',None),SetScreenVariable('posture',None)]
+    
+    # frame:
+        # xalign 0.5
+        # ypos 50
+        # if character is None:
+            # vpgrid:
+                # cols 9
+                # side_align 0.5
+                # for i in range(9):
+                    # if not i == 6:
+                        # $sprite_name = get_sprite_combination(i*10000)
+                        # if sprite_name in store.sprites:
+                            # $displayable_sprite = store.sprites[sprite_name]
+                            # imagebutton:
+                                # idle Transform(displayable_sprite,zoom = 0.2)
+                                # hover Transform(displayable_sprite,zoom = 0.2)
+                                # action SetScreenVariable("character",i)
+                            # key str(i+1):
+                                # action SetScreenVariable("character",i)
+        
+        # if character is not None and posture is None:
+            # vpgrid:
+                # cols 9
+                # side_align 0.5
+                # draggable True
+                # mousewheel True
+                # for i in range(get_posture_count(character)):
+                    # $sprite_name = get_sprite_combination(character*10000+i*1000)
+                    # imagebutton:
+                        # idle Transform(store.sprites[sprite_name],zoom = 0.2)
+                        # hover Transform(store.sprites[sprite_name],zoom = 0.2)
+                        # action SetScreenVariable("posture",i)
+                    # if i+1 < 10:
+                        # key str(i+1):
+                            # action SetScreenVariable("posture",i)
+                        
+        # if character is not None and posture is not None:
+            # vpgrid:
+                # cols 6
+                # draggable True
+                # mousewheel True
+                # side_align 0.5
+                # for mouth_index in range(9):
+                    # for eye_index in range(9):
+                        # for eyebrow_index in range(9):
+                            # $sprite_index = character*10000+posture*1000+mouth_index*100+eye_index*10+eyebrow_index
+                            # $sprite_name = get_sprite_combination(sprite_index)
+                            # if sprite_name in store.sprites:
+                                # $displayable_sprite = store.sprites[sprite_name]
+                                # $cropheight = 150 if character == 0 and posture == 3 else 0
+                                # vbox:
+                                    # add LiveCrop((0,cropheight,300,300) , Transform(displayable_sprite,zoom = 0.4))
+                                    # text str(sprite_index):
+                                        # ypos -200
+                                        # outlines [(1,'000',0,0)]
+                        
     

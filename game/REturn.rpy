@@ -411,17 +411,17 @@ label dlc_begin:
     #show screen selecting "Asaga," "Ava," "Sola," or "Icari"
     #Player selects from one of four girls.
     $ menu_choices = [
-                     ["Asaga","select_asaga"],
-                     ["Ava","select_ava"],
-                     ["Sola","select_sola"],
-                     ["Icari","select_icari"],
+                     [u"阿萨嘉","select_asaga"],
+                     [u"艾瓦","select_ava"],
+                     [u"索拉","select_sola"],
+                     [u"伊卡莉","select_icari"],
                      ]
     show screen decision
     pause
 
 label select_asaga:
     
-    $ girl = "Asaga"
+    $ girl = u"阿萨嘉"
 
     #Asaga
 
@@ -597,7 +597,7 @@ label select_asaga:
 
 label select_ava:
 
-    $ girl = "Ava"
+    $ girl = u"艾瓦"
 
     kay "(Naturally, the ship's XO would be the best person to turn to for help in this situation.)"
     kay "Okay, we're going to Ava."
@@ -739,7 +739,7 @@ label select_ava:
 
 label select_sola:
 
-    $ girl = "Sola"
+    $ girl = u"索拉"
 
     kay "(The only person who would ever believe this crazy story would be a fellow time traveler: Sola!)"
     "She was the most knowledgeable about lost technology out of everyone on the ship. And from what he could remember, Sola was the one who told him the truth about Claude, meaning he had less to explain to Sola compared to the others."
@@ -817,8 +817,8 @@ label select_sola:
     cla "I was fine with helping the Prototypes accomplish that. But then the massacre happened..."
     
     $ menu_choices = [
-                 ["All right, I trust you Claude.","select_sola_trustclaude"],
-                 ["I don't trust you yet... but we're still going to have to work together.","select_sola_donttrustclaude"],
+                 [u"好吧，我相信你，科洛特。","select_sola_trustclaude"],
+                 [u"我不相信你……但是我们这里不得不合作。","select_sola_donttrustclaude"],
                  ]
     show screen decision
     pause
@@ -911,7 +911,7 @@ label select_sola_afterclaude:
 
 label select_icari:
     
-    $ girl = "Icari"
+    $ girl = u"伊卡莉"
     
     kay "(When I think of covert operations... the first person who comes to my mind is Icari!)"
     kay "(Not only that, but she's this ship's chief of security! Exactly the kind of expertise we'll need in a situation like this!)"
@@ -1071,7 +1071,7 @@ label firstbattleofcera:
     "Everything was happening exactly as same as before..."
 
     #If not Ava
-    if girl != "Ava":
+    if girl != u"艾瓦":
         "He heard Ava's voice over the ship wide intercom."
         ava "All hands, battle stations! The PACT Fleet is approaching our position!"
 
@@ -1104,17 +1104,17 @@ label firstbattleofcera:
     #Change based on partner
     "He closed his eyes... and prayed that [girl] would be safe..."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         show asagacockpit:
             alpha 0.5
         with dissolve
         "He would always be able to see the Black Jack on the battle map... When things got too dicey, he would be able to order her to turn around..."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         show icaricockpit3:
             alpha 0.5
         with dissolve
         "He would always be able to see the Phoenix on the battle map... When things got too dicey, he would be able to order her to turn around..."
-    if girl == "Sola":
+    if girl == u"索拉":
         show solacockpit1:
             alpha 0.5
         with dissolve
@@ -1150,8 +1150,8 @@ label firstbattleofcera:
     stop sound fadeout 1.5
     
     $ menu_choices = [
-                     ["Save the crewman.","savethecrewman"],
-                     ["Don't blow cover.","dontblowcover"],
+                     [u"去救舰员。","savethecrewman"],
+                     [u"不要暴露。","dontblowcover"],
                      ]
     show screen decision
     pause
@@ -1210,8 +1210,8 @@ label savethecrewman:
     "Shields looked around, and saw a pistol lying beside a fallen crewman. It would take far more than that to down a mechanized hunter drone, but it was something..."
     
     $ menu_choices = [
-                     ["Grab the pistol and attack the drone.","attackdronewithpistol"],
-                     ["Grab the pistol and fall back.","grabpistolfallback"],
+                     [u"拿走手枪攻击机器人。","attackdronewithpistol"],
+                     [u"拿走手枪并撤退。","grabpistolfallback"],
                      ]
     show screen decision
     pause
@@ -1481,8 +1481,8 @@ label dontblowcover:
     "The service gate where they had entered the room was behind them... They could use it to retreat..."
     "He also noted canisters of liquid Ongessite stored on the opposite end of the room... If he could somehow get to those..."
     $ menu_choices = [
-                    ["Fight the drone in the room.","fightdroneinroom"],
-                    ["Escape back into the service tunnel.","escapeintotunnel"],
+                    [u"在房间里和机器人战斗。","fightdroneinroom"],
+                    [u"退回维护通道。","escapeintotunnel"],
                     ]
     show screen decision
     pause
@@ -1650,19 +1650,19 @@ label afterdefeatingdrone:
     $dshow(34210)
 
     #If Asaga, Sola, or Icari
-    if girl != "Ava":
+    if girl != u"艾瓦":
         kay "Let's sneak back to the hangar to meet up with [girl]."
-    if girl == "Ava":
+    if girl == u"艾瓦":
         jump meetavaatbridge
 
     #Hangar
     "The two of them wandered into the hangar, lurking under the shadows of the ryder bays again."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         jump meetasagaathangar
-    if girl == "Sola":
+    if girl == u"索拉":
         jump meetsolaathangar
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         jump meeticariathangar
 
 label meetasagaathangar:
@@ -1706,8 +1706,8 @@ label meetasagaathangar:
     kay "(How are we going to do that...)"
     
     $ menu_choices = [
-                    ["We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste.","asaga_nobodyswap"],
-                    ["There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara...","asaga_bodyswap"],
+                    [u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。","asaga_nobodyswap"],
+                    [u"我们的牢房里“正好”有个人长得和切嘉拉一样……","asaga_bodyswap"],
                     ]
     show screen decision
     pause
@@ -1716,7 +1716,7 @@ label asaga_nobodyswap:
     
     $ body_swap = False
     
-    #"We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste."
+    #u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。"
     $dshow(2000)
     asa "Understood, sah!"
     
@@ -1726,7 +1726,7 @@ label asaga_bodyswap:
 
     $ body_swap = True
 
-    #"There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara..."
+    #u"我们的牢房里“正好”有个人长得和切嘉拉一样……"
     $dshow(211)
     asa "Heheh... So we're gonna take Lynn from the brig, put her under, then swap out Chigara with Lynn in the sickbay so that nobody notices, eh? I like it!"
     
@@ -1844,8 +1844,8 @@ label meetsolaathangar:
     sol "Given the duration we must hold her, we must find a way to prevent anyone from realizing she has gone missing."
 
     $ menu_choices = [
-                    ["We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste.","sola_nobodyswap"],
-                    ["There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara...","sola_bodyswap"],
+                    [u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。","sola_nobodyswap"],
+                    [u"我们的牢房里“正好”有个人长得和切嘉拉一样……","sola_bodyswap"],
                     ]
     show screen decision
     pause
@@ -1854,7 +1854,7 @@ label sola_nobodyswap:
     
     $ body_swap = False
     
-    #"We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste."
+    #u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。"
     $dshow(70210)
     sol "Very well."
     kay "Okay, so here's the plan."
@@ -1866,7 +1866,7 @@ label sola_bodyswap:
     
     $ body_swap = True
 
-    #"There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara..."
+    #u"我们的牢房里“正好”有个人长得和切嘉拉一样……"
     kay "We can put Lynn under and then swap her with Chigara in the sickbay. Unless someone were to take a really close look, nobody would be able to tell the difference until Lynn wakes up."
     $dshow(70221)
     sol "Understood."
@@ -1999,15 +1999,15 @@ label meeticariathangar:
     ica "On top of all that, we've got to figure out a way to make sure nobody notices Chigara's gone missing until at least the battle begins. No doubt, the other Kayto Shields will launch a search as soon as he discovers that Chigara has vanished off the face of the ship."
 
     $ menu_choices = [
-                    ["We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste.","icari_nobodyswap"],
-                    ["There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara...","icari_bodyswap"],
+                    [u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。","icari_nobodyswap"],
+                    [u"我们的牢房里“正好”有个人长得和切嘉拉一样……","icari_bodyswap"],
                     ]
     show screen decision
     pause
         
 label icari_nobodyswap:
     
-    #"We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste."
+    #u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。"
     
     $ body_swap = False
     
@@ -2019,7 +2019,7 @@ label icari_nobodyswap:
     jump icari_kidnapplan
 
 label icari_bodyswap:
-    #"There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara..."
+    #u"我们的牢房里“正好”有个人长得和切嘉拉一样……"
     
     $ body_swap = True
     
@@ -2126,15 +2126,15 @@ label meetavaatbridge:
     $dshow(32310)
     cla "One more thing... If Chigara just vanishes from the sickbay, it's only a matter of time until someone realizes what's happened. If the other Kayto Shields hears that his love has just up and vanished, he's going to launch a ship-wide search for her."
     $ menu_choices = [
-                    ["We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste.","ava_nobodyswap"],
-                    ["There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara...","ava_bodyswap"],
+                    [u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。","ava_nobodyswap"],
+                    [u"我们的牢房里“正好”有个人长得和切嘉拉一样……","ava_bodyswap"],
                     ]
     show screen decision
     pause
             
 label ava_nobodyswap:
 
-    #"We'll just take that risk. We have to kidnap Chigara as soon as possible and there's no time to waste."
+    #u"我们必须冒这个险。我们没时间浪费了，必须绑走切嘉拉。"
     
     $ body_swap = False
     
@@ -2148,7 +2148,7 @@ label ava_nobodyswap:
 
 label ava_bodyswap:
     
-    #"There *is* a certain body double sitting in our brig right now who looks almost identical to Chigara..."
+    #u"我们的牢房里“正好”有个人长得和切嘉拉一样……"
     
     $ body_swap = True
     
@@ -2386,8 +2386,8 @@ label distractingotherclaude:
     kay "(For some reason, I have a feeling there's something important on that holo... Maybe it's related to the memories I've temporarily lost.)"
     kay "(But do I risk blowing my cover by trying to steal it?)"
     $ menu_choices = [
-                    ["Try to steal Claude's holo.","stealclaudeholo"],
-                    ["Leave the sickbay without the holo.","dontstealclaudeholo"],
+                    [u"偷走科洛特的全息终端。","stealclaudeholo"],
+                    [u"不拿走全息终端。","dontstealclaudeholo"],
                     ]
     show screen decision
     pause
@@ -2456,7 +2456,7 @@ label readthroughholo:
     play music "Music/Anguish.ogg" fadeout 1.5
 
     #IF NOT SOLA ARC
-    if girl != "Sola":
+    if girl != u"索拉":
         "His blood went cold when he saw what was inside."
         "From what he could deduce, there were hundreds of message logs inside the holo containing Claude's reports on what was occurring on board the Sunrider ever since she first came onboard, as well as detailed instructions from the Prototypes."
         "And a medical report, proving beyond the shadow of a doubt that Chigara was indeed a prototype."
@@ -2487,7 +2487,7 @@ label readthroughholo:
         kay "(I have to hurry back to the future Claude, and confront her about this!)"
         "With that, he quickened his pace to crew quarter 8."
 
-    if girl == "Sola":
+    if girl == u"索拉":
         #IF SOLA ARC
 
         "From what he could deduce, there were hundreds of message logs inside the holo, containing Claude's reports on what was occurring on board the Sunrider ever since she first came onboard, as well as detailed instructions from the Prototypes."
@@ -2516,11 +2516,11 @@ label chigarakidnapped:
     scene bg crewquarters with dissolve
 
     $dshow(34010,xpos=0.75)
-    if girl == 'Sola':
+    if girl == u"索拉":
         $dshow(70310,xpos=0.25)
-    elif girl == 'Asaga':
+    elif girl == u"阿萨嘉":
         $dshow(330,xpos=0.25)
-    elif girl == 'Icari':
+    elif girl == u"伊卡莉" :
         $dshow(41410,xpos=0.25)
     cla "You're back! As you can see, the plan went exactly as planned." #just as keikaku
     "He saw Chigara tied up to a chair, still unconscious from the sedation."
@@ -2539,20 +2539,20 @@ label chigarakidnapped:
         kay "I found this in your old self's office."
 
         #Variations
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(235,xpos=0.25)
             asa "Eh? What is it?"
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(42000,xpos=0.25)
             ica "Hey, I know what that is. It's an off market holo that's popular in Denari space."
 
         kay "You've been communicating with the Prototypes all this time, haven't you? There's messages on this holo giving away all our movements to the enemy, and even a medical report which you wrote, completely invalidating the other report you gave us that Chigara was not a Prototype!"
 
         #Variations
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(2111)
             asa "E-eehh!?!?"
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41210)
             "Icari put her hand on her sidearm."
             ica "Tsch... So you were a spy all along too, then!?"
@@ -2575,11 +2575,11 @@ label chigarakidnapped:
         cla "I was fine with helping the Prototypes accomplish that. But then the massacre happened..."
         $dshow(34110)
 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(534)
             asa "So you're sayin' basically, that you used to work for the Prototypes, but now you don't?"
             $dshow(34)
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41200)
             ica "Ultimately, you're not working for the Prototypes right now then?"
             $dshow(41100)
@@ -2590,7 +2590,7 @@ label chigarakidnapped:
         kay "\"The future can only be saved... by destroying everything...\""
         kay "What does this mean?"
 
-    if have_holo == True and girl == "Sola":
+    if have_holo == True and girl == u"索拉":
         #IF HAVE HOLO AND SOLA ROUTE
 
         $dshow(32010)
@@ -2623,12 +2623,12 @@ label chigarakidnapped:
         cla "There's something about time traveling I haven't mentioned yet..."
         kay "(Uh oh... I don't like the sound of this.)"
 
-        if girl == "Sola":
+        if girl == u"索拉":
             kay "(Does this have something to do what Sola was saying earlier?)"
             $dshow(70122)
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(32)
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41110)
         $dshow(34310)
         play music "Music/Anguish.ogg" fadeout 1.5
@@ -2653,11 +2653,11 @@ label chigarakidnapped:
         #Crew quarters
         scene bg crewquarters with dissolve
         $dshow(34310)
-        if girl == 'Sola':
+        if girl == u"索拉":
             $dshow(70122,xpos=0.25)
-        elif girl == 'Asaga':
+        elif girl == u"阿萨嘉":
             $dshow(32,xpos=0.25)
-        elif girl == 'Icari':
+        elif girl == u"伊卡莉" :
             $dshow(41110,xpos=0.25)
         kay "What a minute. You mean the kind of time paradox which can destroy our entire universe!?"
 
@@ -2688,19 +2688,19 @@ label chigarakidnapped:
     $dshow(34000)
     cla "Ah, now you're understanding how this all works, captain... Teehee..."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(514)
         asa "Ah... I don't understand any of this... My head hurts..."
         $dshow(534)
         asa "But in the end... the me right now is gonna vanish from existence? But then, I'll still be another Asaga, who won't even know there was a mission to change the future? I'll just... live on, never knowing there even was an event like the Liberation Day Massacre?"
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40010)
         ica "Ah, this time travel still's hard to understand."
         $dshow(40522)
         ica "But if this mission's a success, we'll have destroyed the universe where the massacre occurs, and head down a different universe where the massacre simply never existed at all?"
 
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70111)
         sol "I am beginning to understand the nature of time travel."
         sol "If a time paradox occurs, the unbinding law of causality simply destroys the universe where the paradox occurs, and creates a new one without the paradox. A simple solution to dealing with a logical impossibility."
@@ -2709,11 +2709,11 @@ label chigarakidnapped:
     $dshow(34010)
     cla "In this circumstance, I intentionally sought to create a time paradox, in order to manipulate the law of causality into destroying the universe you don't want, and into creating the one you do want. Well... it was pretty drastic, but it's not like there's anyone out there who can stop me, so... teehee~!"
     $dshow(34011)
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70020)
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(655)
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40523)
     cla "It's pretty convenient, this little quirk that the law of causality has. I've been using it to create and destroy universes for... ah, I forgot, I'm immortal! Who knows how long I've been doing this!"
     cla "Anyways... Now that your choices have been laid out in front of you... I want to watch you choose, Kayto Shields, Hero of the Galaxy. That's the entire reason why I brought you here."
@@ -2727,8 +2727,8 @@ label chigarakidnapped:
     kay "(C-come to think of it... Was there ever a moment when she wasn't playing me like a fiddle during the whole time I've known her!? Argghhh...!)"
 
     $ menu_choices = [
-                    ["Claude, I'm through with being your plaything!","donttrustclaude"],
-                    ["We're in this too deep now. We have to keep working together.","trustclaude"],
+                    [u"科洛特，我已经当够了你的玩具！","donttrustclaude"],
+                    [u"我们已经牵扯得太深了，我们必须继续合作。","trustclaude"],
                     ]
     show screen decision
     pause
@@ -2751,28 +2751,28 @@ label donttrustclaude:
     kay "G-GUH!"
     "He collapsed to the floor, unable to do anything except drool helplessly on the steel tile as all the air escaped from his chest."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(1121)
         asa "C-Captain!"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(42000)
         ica "Tsch! CLAUDE!!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70423)
         sol "A-ah!"
 
     $dshow(32010)
     cla "Aah, you have to keep entertaining me, captain... Who knows what might happen if I get bored... Hufufufu..."
-    if girl != 'Ava':  #she's not there... right?
+    if girl != u"艾瓦":  #she's not there... right?
         "Claude looked at [girl], who seemed just about ready to attack."
     $dshow(34001)
     cla "Relax, relax. I wouldn't harm my beloved captain. A girl can't help wanting to show off a little from time to time."
     "With a snap of her finger, Shields felt the weight lift from him. He picked himself back up."
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(153)
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40020)
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70021)
     kay "What... did you do?"
     cla "When you have an infinite amount of time, you can learn all sorts of ways to manipulate the laws of this universe."
@@ -2831,11 +2831,11 @@ label chigarawakesup:
     kay "G-guck-"
     "As if on cue, Chigara sleepily opened her eyes."
     $dshow(34310,xpos=0.85)
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(53,xpos=0.15)
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40020,xpos=0.15)
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70121,xpos=0.15)
     $dshow(20000)
     chi "A-ah... C-capt--"
@@ -2843,7 +2843,7 @@ label chigarawakesup:
     chi "E-e-e-eh!?!?!?!"
     chi "W-what's going on, captain? Why am I tied up to this chair!?"
     
-    if girl != "Ava":
+    if girl != u"艾瓦":
         chi "C-Captain!? A-And the doctor!? A-a-and [girl]!?"
     "Chigara's eyes darted around the room while she struggled against the ropes in a panic."
     kay "(Shit, shit, shit! Uhh... For now, I've got to calm Chigara down!)"
@@ -2896,7 +2896,7 @@ label chigarawakesup:
         #2. ON AVA ROUTE AND BODY SWAP, OR PICKED EITHER BLEW COVER OR BODY SWAP BUT NOT BOTH: Captured by ship security after Chigara escapes, ship loses power, no happy end
         #3. DID NOT BLOW COVER AND PERFORMED BODY SWAP: Not captured by ship security but Chigara escapes, ship loses power, no happy end
 
-    if girl == 'Ava': #keeping or blowing cover makes no difference. (or, talking to ava == blowing your cover)
+    if girl == u"艾瓦": #keeping or blowing cover makes no difference. (or, talking to ava == blowing your cover)
         if not body_swap:
             #instantly caught
             jump capturedkidnapping
@@ -2920,10 +2920,10 @@ label chigarawakesup:
             
     # if coverblown == True and body_swap == False and girl != "Ava":
         # jump capturedkidnapping
-    # if girl == "Ava" and body_swap == False:
+    # if girl == u"艾瓦" and body_swap == False:
         # jump capturedkidnapping
         
-    # if girl == "Ava" and body_swap == True:
+    # if girl == u"艾瓦" and body_swap == True:
         # $ captured = True
         # jump capturedkidnapping #capturedafternopower does not exist. seems like it was merged later
     # if body_swap == False and coverblown == False and girl != "Ava":
@@ -3017,7 +3017,7 @@ label capturedkidnapping:
         
     "Shields lost his words when another face emerged from the wall of marines."
 
-    if girl != "Ava":
+    if girl != u"艾瓦":
         #IF NOT ON AVA ROUTE
 
         $dshow(13310,xpos=0.2)
@@ -3046,7 +3046,7 @@ label capturedkidnapping:
         
         jump detainedinbrig
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         #IF ON AVA ROUTE
 
         $dshow(13310,xpos=0.2)
@@ -3072,8 +3072,8 @@ label capturedkidnapping:
         kay "(What do I do...)"
         
         $ menu_choices = [
-                        ["I'll just have to trust Ava...","immediatecapture_trustava"],
-                        ["I can't get captured here! I'll have to try to escape!","immediatecapture_escape"],
+                        [u"我必须相信艾瓦……","immediatecapture_trustava"],
+                        [u"我不能被抓住！我要逃走！","immediatecapture_escape"],
                         ]
         show screen decision
         pause
@@ -3226,39 +3226,39 @@ label shiplosespower:
     scene bg crewquarters_nopower with dissolve
     "Shields pulled his holo out and put it on maximum illumination, casting a weak light over the room. Long shadows surrounded him, filling his heart with dread."
     
-    if girl != "Ava":
+    if girl != u"艾瓦":
         "He confirmed that [girl] was still safe. However, Chigara was now nowhere to be found. All that remained were the broken fragments of the chair and cut rope on the floor."
 
     "A handheld laser cutter roughly the size of a cigarette continued to buzz on the floor, until Shields picked it up and shut it off."
     kay "Did you see which direction she took off!?"
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40022,behind='darkness')
         ica "Negative! It was pitch black and the sound of the cutter covered up all her movements!"
         
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(53,behind='darkness')
         asa "Sorry, I couldn't hear anything 'cause of that cutter!"
         
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70123,behind='darkness')
         sol "Negative. She moved with the movements of a trained soldier - silent, and swift."
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         "Nobody responded to his question. He looked around and realized that Claude had completely vanished."
         kay "(Did Chigara get her?)"
         kay "(No way, not even the Prototype leader is powerful enough to take Claude on. Then she must have vanished of her own will.)"
         kay "(Damnit... Now that she's explained all the rules of this game, she expects me to figure out the rest on my own, huh...)"
         kay "(She's probably still watching me... Eagerly waiting for my next plan of action...)"
 
-    if girl != "Ava":
+    if girl != u"艾瓦":
         kay "We've been had!"
         
     kay "(Shit! I made a mistake!)"
     kay "(I should have known that Chigara could be body jacked at any time! That's exactly what Lynn told me when we escaped on the lifepod together. All this talk about preventing her from entering the mindstream confused me into thinking we'd be safe as long as we got her before then!)"
     kay "(No... The reason why we have to prevent Chigara from entering the mindstream is to prevent the Prototype leader from body jacking her after the leader is dead! Chigara can be body snatched whenever the Prototypes want while their leader's still alive!)"
     
-    if girl != "Ava":
+    if girl != u"艾瓦":
         kay "Wait a minute..."
         "Shields looked around and realized that Claude was now nowhere to be found as well."
         kay "Claude!"
@@ -3267,16 +3267,16 @@ label shiplosespower:
         kay "(Damnit... Now that she's explained all the rules of this game, she expects me to figure out the rest on my own, huh...)"
         kay "(She's probably still watching me... Eagerly waiting for my next plan of action...)"
         
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41211,behind='darkness')
             ica "Claude's gone! Where'd she vanish to!?"
             $dshow(41111,behind='darkness')
             
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(655,behind='darkness')
             asa "Eeh!? Claude's vanished, like, into thin air!"
             
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow(70010,behind='darkness')
             sol "Tsch... Claude has chosen to leave us to our to our devices."
 
@@ -3285,13 +3285,13 @@ label shiplosespower:
         kay "The Sunrider's main reactor has been remotely shut off."
         kay "Without it, we won't be able to get a FTL transmission sent to Fontana. Even worse, we're essentially sitting ducks for the loyalist PACT Fleet now. Unless we can get power restored ASAP, this ship is going to be destroyed!"
 
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41101,behind='darkness')
             ica "Tsch... I can't believe we were fooled so easily..."
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(2121,behind='darkness')
             asa "Eh-EEEHH!! How're we gonna do that!?"
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow(71000,behind='darkness')
             sol "How can we restore the ship's power?"
 
@@ -3299,28 +3299,28 @@ label shiplosespower:
         kay "It's a long shot, but maybe I can undo whatever the Prototype has done to our systems."
         kay "But wait... The Sunrider also has an emergency FTL transmitter which operates on a separate battery pack. It's all the way down at Deck 2, section 37, but if we get to it, we could get a message sent to Fontana even without power."
 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(11,behind='darkness')
             asa "Ah, but section 37's pretty far from here, and who knows how long it'll take to restore power..."
-        if girl == "Sola":
+        if girl == u"索拉":
             sol "Section 37 is far from here, while restoring the ship's power will undoubtedly prove time consuming as well..."
 
-        if girl != "Icari":
+        if girl != u"伊卡莉":
             kay "([girl] has a point... I need to decide which task to prioritize over the other...)"
             kay "(If we can't restore the ship's power, then we're sitting ducks once PACT attacks... On the other hand, I doubt I can just waltz into Engineering and show my face to the entire crew without getting detained by ship security...)"
             kay "(And if I get captured before relaying the message to Fontana, then we have no choice but to allow Chigara to enter the mindstream, or else we'll all be killed when the Prototypes assume control of Fontana's fleet.)"
             kay "(Meaning, I damned better send Fontana the warning before revealing myself.)"
             kay "We go to the back up comm first. Then we go to Engineering and restore power."
         
-            if girl == "Asaga":
+            if girl == u"阿萨嘉":
                 $dshow(2000,behind='darkness')
                 asa "Understood, capt'n! Let's get that message sent off to Veniczar Fab!"
             
-            if girl == "Sola":
+            if girl == u"索拉":
                 $dshow(70210,behind='darkness')
                 sol "Understood."
                 
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             $dshow(41210,behind='darkness')
             ica "Oy, section 37's too far from here! Here's what we should do. I can probably figure out what Chigara's done to our main reactor. I'm going to run to Engineering to restore power."
             ica "While I'm doing that, you can go to the emergency FTL transmitter and send Fontana the message."
@@ -3349,7 +3349,7 @@ label shiplosespower:
             
             jump gotobackupftl
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         kay "(And now we have a new, huge problem...)"
         kay "(The Prototype leader laid out this trap for us. And we just stepped right into it.)"
         kay "(The Sunrider's main reactor has been remotely shut off.)"
@@ -3449,10 +3449,10 @@ label detainedinbrig:
     "Shields pretended to crumple to the floor in defeat, and put his ears up against the crack where the gate came down on the floor. Sure enough, he could now faintly hear the other Shields' and Ava's exchange."
 
     $dshow(13310,xpos=0.7)
-    if girl != "Ava":
+    if girl != u"艾瓦":
         ava "Captain, perhaps we should consider the prisoner's warning seriously. [girl] is convinced that this Kayto Shields is telling the truth."
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         ava "Captain, perhaps we should consider the prisoner's warning seriously. Given the gravity of what he is alleging, if it turns out that he is telling the truth, our victory at Cera would be meaningless if the top Alliance leadership is assassinated and a far greater conflict between the Alliance and PACT ignites."
 
     if have_holo == True:
@@ -3482,7 +3482,7 @@ label detainedinbrig:
     
     hide kayto with dissolve
     
-    if girl != "Ava":
+    if girl != u"艾瓦":
         #IF NOT ON AVA ROUTE
         "With that, the other Shields left the brig while Ava was left by herself trembling with anger."
         $dshow(10300)
@@ -3498,7 +3498,7 @@ label detainedinbrig:
         kay "(Do I wait for Claude to show up again? Just where did she go anyways...?)"
         kay "(Goddamnit...)"
                 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         #IF ON AVA ROUTE
         $dshow(10010)
         "With that, the other Shields left the brig. Ava merely sighed, as if she knew this outcome was inevitable but was disappointed it had come to pass anyways."
@@ -3516,7 +3516,7 @@ label detainedinbrig:
         
         jump freedbyava
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         #not saved by ava so now Icari gets a chance to
         jump freedbyicari
         
@@ -3528,11 +3528,11 @@ label detainedinbrig:
     jump badend_trapped
 
 label badend_trapped:
-    if girl=="Ava":
+    if girl == u"艾瓦":
         $renpy.save("BAD END 3")
-    elif girl == "Asaga":
+    elif girl == u"阿萨嘉":
         $renpy.save("BAD END 4")
-    elif girl == "Sola":
+    elif girl == u"索拉":
         $renpy.save("BAD END 5")
         
     #IF DON'T HAVE HOLO AND NOT ON ICARI OR AVA ROUTE
@@ -3557,11 +3557,11 @@ label badend_trapped:
     if ship_power == False and girl != "Ava":
         scene bg brig_nopower with horizontalwipe
         play music "Music/Anguish.ogg" fadeout 1.5
-    if girl == "Ava":
+    if girl == u"艾瓦":
         scene bg brig_damaged with horizontalwipe
         play music "Music/Camino.ogg" fadeout 1.5
         
-    if girl != "Ava":
+    if girl != u"艾瓦":
 
         "He paced for an unknown amount of time and finally crumpled down to the small bunk."
         kay "(Argghh!!! Where is Claude!? Where's... anyone!?)"
@@ -3591,9 +3591,9 @@ label badend_trapped:
         "Shields continued with his monologue, his mind slowly cracking."
         kay "Ah... I should have known Ava would just go along with what Bastard Shields wants... After all, all she's good for is just following orders..."
 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             kay "I wonder... what happened to Asaga... I bet she's still out there... Trying to convince Bastard Shields to let me out... Heh... But like he'd ever listen to that..."
-        if girl == "Sola":
+        if girl == u"索拉":
             kay "I wonder... what happened to Sola... She's probably taken it all upon herself to stop the massacre alone now...  I hope... she's all right..."
 
         kay "What was the point of this... In the end... I couldn't accomplish anything..."
@@ -3617,7 +3617,7 @@ label badend_trapped:
         "He raised his head to the sound of pounding on the other side of the glass."
         "The cell's door opened, and a figure crashed in..."
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         #IF SHIELDS WAS STUNNED IN MESS HALL
 
@@ -3670,7 +3670,7 @@ label badend_trapped:
         
         hide ava with dissolve
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
 
         $dshow(8422)
         asa "T-tsch... C-Captain..."
@@ -3717,7 +3717,7 @@ label badend_trapped:
         
         hide asaga with dissolve
         
-    if girl == "Sola":
+    if girl == u"索拉":
 
         #IF SOLA ROUTE
 
@@ -3810,26 +3810,26 @@ label badend_trapped:
     
     play sound "sound/choirend.ogg"
     
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $persistent.unlocked_endings["BAD END 3: TRAPPED AVA VER"] = True
         show expression Text("BAD END: TRAPPED, Ava Ver.",yalign=0.5,size=90,color="a00")
-    if girl == "Sola":
+    if girl == u"索拉":
         $persistent.unlocked_endings["BAD END 5: TRAPPED SOLA VER"] = True
         show expression Text("BAD END: TRAPPED, Sola Ver.",yalign=0.5,size=90,color="a00")
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $persistent.unlocked_endings["BAD END 4: TRAPPED ASAGA VER"] = True
         show expression Text("BAD END: TRAPPED, Asaga Ver.",yalign=0.5,size=90,color="a00")
     $check_for_all_endings()    
     pause 3
     $dshow(32310)
     
-    if girl != "Ava":
+    if girl != u"艾瓦":
 
         cla "Aah, looks like you messed up, captain... And you made the future even worse than before by getting [girl] killed!"
         cla "You need to find some evidence to get Ava to believe you when you're trapped in the brig. Or avoid getting captured by the other Kayto Shields in the first place."
         cla "Try again, this time by either stealing the holo from sickbay, or not blowing your cover!"
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
 
         cla "Aah, looks like you messed up, captain... And you made the future even worse than before by getting Ava killed!"
         cla "Mou, you seriously thought you could escape from a squad of armed marines by yourself? Did you forget that you're not the one with super powers in this story, captain?"
@@ -3951,7 +3951,7 @@ label freedbyava:
     scene bg tunnel with dissolve
     "With that, Shields quickly put on his uniform and escaped into the maintenance shaft as ordered."
     
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         scene bg escapepod with dissolve
         $dshow(13010,xpos=0.3)
@@ -4006,7 +4006,7 @@ label freedbyava:
         kay "A wild adventure to save the day once more. Just like old times."
         $dshow(12412,xpos=0.3)
         
-    if girl != "Ava":
+    if girl != u"艾瓦":
         
         #Lifepod "T-minus 46 hours before the Liberation Day Massacre, 10 hours until Chigara enters the mind stream"
         
@@ -4026,7 +4026,7 @@ label freedbyava:
         scene bg escapepod with dissolve
         "He entered lifepod 15 as told by Ava, and found her and [girl] waiting inside."
 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             #ASAGA
             $dshow(2021,xpos=0.25)
             asa "Captain!"
@@ -4042,7 +4042,7 @@ label freedbyava:
             asa "Once this is all over, I think you should throw him into the brig and throw the keys away just to teach him a lesson!"
             "Shields shook his head, but laughed in spite of himself at Asaga's antics."
 
-        if girl == "Sola":
+        if girl == u"索拉":
             #SOLA
             $dshow(70323,xpos=0.25)
             sol "Captain..."
@@ -4066,7 +4066,7 @@ label freedbyava:
         kay "(Damnit Claude... I bet she has some trick up her sleeve which would let us avert the massacre here and now!)"
         kay "(But I guess she has a point... Using her powers is outright dangerous, considering what we've learned about the Law of Causality. For now, we're stuck with what Claude can accomplish without time powers...)"
 
-    if girl != "Ava":
+    if girl != u"艾瓦":
 
         "Now that they were safely hidden away from the ship's various security features, Ava finally managed to relax. They sat down alongside each other inside the pod."
         $dshow(10000,xpos=0.5)
@@ -4092,7 +4092,7 @@ label freedbyava:
         ava "You must know this timeline better than anyone else, capt-- uh... Kayto. What are our options?"
         $dshow(10020)
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
 
         $dshow(13300)
         ava "In any matter, the situation is as follows: We must still detain the chief engineer and warn Fontana so that we may survive the battle without her assistance. Further, now that ship security is on high alert and we know the Chief can remotely shut down the ship's reactor, we must avoid detection."
@@ -4111,14 +4111,14 @@ label freedbyava:
         kay "Now that we've lost all power, the back up comm is our only option."
         kay "Not only that, but we have to get to Engineering and somehow get our reactor back online."
         
-        if girl != "Ava":
+        if girl != u"艾瓦":
         
             #If not Ava route
             ava "Then it appears that sending the transmission and restoring power are our two immediate priorities. I will return to my station and distract the other Kayto Shields and oversee the crew's efforts to restore power."
             ava "Meanwhile, you and [girl] will go to the backup comm and send the transmission."
             kay "All right, sounds like a plan. We can figure out a way to stop Chigara after we've sent the message and restored power."
         
-        if girl == "Ava":
+        if girl == u"艾瓦":
             #If Ava route
             ava "Then it appears that sending the transmission and restoring power are our two immediate priorities. We'll take a trip together to section 37 and use the back up comm to relay the message to Fontana."
             ava "After that, we can go to Engineering and try to restore the reactor."
@@ -4132,7 +4132,7 @@ label freedbyava:
         kay "As for capturing Chigara, I'm almost out of options now that the prior kidnapping was a bust."
         kay "I could try convincing my other self that Chigara's a Prototype and get him to detain her. But that's a total longshot at this point!"
     
-        if girl == "Sola" or girl == "Ava":
+        if girl == u"索拉" or girl == u"艾瓦":
 
             kay "(Come to think of it... There's another option!)"
 
@@ -4178,7 +4178,7 @@ label freedbyava:
             kay "(But... this is the safety of the entire galaxy we're talking about...)"
             kay "(What do I do...!)"
             
-            if girl == "Sola":
+            if girl == u"索拉":
             
                 "At a loss, he decided to ask Sola for advice."
                 kay "Tomorrow, Asaga will attack the Liberty while Chigara's inside the mindstream. If we just manipulate events a little, I think we could change the future by having Asaga kill Chigara."
@@ -4197,13 +4197,13 @@ label freedbyava:
                 kay "All right... Thanks, Sola..."
                 
                 $ menu_choices = [
-                    ["We kill Chigara: First, we sneak into my office and contact Fontana. Then we get Claude to swap with this universe's Claude on the Bianca tomorrow so that Asaga kills Chigara for us.","sola_killchigarawithasaga"],
-                    ["We capture Chigara: First, we sneak into my office and contact Fontana. Then, we confront this universe's Kayto Shields together to convince him to detain Chigara.","sola_decideconfrontshields"],
+                    [u"我们杀掉切嘉拉：首先我们潜入我的办公室联络方特纳，然后让这里的科洛特乘上“比安卡”确保阿萨嘉帮我们杀掉切嘉拉。","sola_killchigarawithasaga"],
+                    [u"我们抓住切嘉拉：首先我们潜入我的办公室联络方特纳，然后去说服这里的我抓捕切嘉拉。","sola_decideconfrontshields"],
                     ]
                 show screen decision
                 pause
                 
-            if girl == "Ava":
+            if girl == u"艾瓦":
 
                 kay "There's another option... In my timeline, Asaga's mind broke down from awakening too many times, and she attacked Chigara in a fit of jealous rage when Chigara entered the mindstream."
                 kay "Even though Asaga was ultimately thwarted in my version of events, if we manipulate the timeline a bit, I think we could change the future by having Asaga kill Chigara."
@@ -4216,13 +4216,13 @@ label freedbyava:
                 kay "I know..."
                 
                 $ menu_choices = [
-                    ["We confront the other Kayto Shields and convince him to detain Chigara.","ava_decideconfrontshields"],
-                    ["We use Asaga to kill Chigara for us.","ava_killchigarawithasaga"],
+                    [u"我们去见这里的我，说服他抓捕切嘉拉。","ava_decideconfrontshields"],
+                    [u"我们让阿萨嘉帮我们杀掉切嘉拉。","ava_killchigarawithasaga"],
                     ]
                 show screen decision
                 pause
                 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
         
             $ killchigara = False
         
@@ -4321,12 +4321,12 @@ label gotobackupftl:
     
     scene bg tunnel with dissolve
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "Shields and [girl] ran into the closest maintenance tunnel and headed down to Deck 2."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         "Shields ran into the closest maintenance tunnel and headed down to Deck 2."
     
-    if girl == "Ava":
+    if girl == u"艾瓦":
     
         ##AVA GOING TO BACKUP COMM
         #Tunnel "T-minus 50 hours before the Liberation Day Massacre, 14 hours until Chigara enters the mind stream"
@@ -4532,35 +4532,35 @@ label gotobackupftl:
         
         jump restoringpower
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(54)
         asa "Hey, so what's up with this backup comm anyways? I didn't know we had something like that..."
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70220)
         sol "Explain to me the specifics of the backup comm."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         kay "It's one of a few systems which keep operating under battery power when the ship loses power like this. Basically, when the ship's disabled, we need to be able to breathe and call for help. That's why life support and the FTL comm keep working."
         kay "It's a lot more limited than the regular ones though. We can only transmit a text message less than 120 characters in length, and the message can only be broadcast on the intergalactic distress and rescue channel."
         kay "Another problem is that the batteries are still nowhere powerful enough to power life support for the entire ship. The air's going to get really thin on deck 2 real fast."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         kay "(The back up comm's one of a few systems which keep operating under battery power when the ship loses power like this. Basically, when the ship's disabled, we need to be able to breathe and call for help. That's why life support and the FTL comm keep working.)"
         kay "(It's a lot more limited than the regular ones though. We can only transmit a text message less than 120 characters in length, and the message can only be broadcast on the intergalactic distress and rescue channel.)"
         kay "(Another problem is that the batteries are still nowhere powerful enough to power life support for the entire ship. The air's going to get really thin on deck 2 real fast.)"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         asa "I'm sure it won't be any tougher than flying a ryder... But basically, this isn't going to be as easy as just crawling to the comm room and sending a message?"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "I have endured worse. However, the road ahead looks long."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         kay "Yeah. All the lifts and trams are offline as well, so we'll be crawling through about 300 meters of maintenance tunnels."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         kay "(All the lifts and trams are offline as well, so I'll be crawling through about 300 meters of maintenance tunnels.)"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         asa "All right, lead the way, capt'n!"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "Then let us hurry."
 
     #Tunnel
@@ -4569,54 +4569,54 @@ label gotobackupftl:
     "After roughly half an hour of climbing down ladders and crawling through maintenance shafts hardly wider than sewage pipes, Shields could begin to see his breaths turn into frost vapors. The air was no longer as rich with oxygen, making the trek all the more arduous."
     "The outer most sections of the ship were quickly dissipating heat into space, and life support was slowly losing the battle to keep the extremities of the ship fit for human life."
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "He looked back."
         kay "[girl], how're you holding up?"
         
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(230)
             "Asaga still looked to be in good condition."
             asa "A 'lil cold's no prob! Better cold than too hot, 'cause I'd be drenched with sweat otherwise!"
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow(70020)
             "Sola's teeth was chattering, but she otherwise did not exhibit any signs of hypothermia."
             sol "I can still carry on."
 
         kay "All right. We're... about halfway there. It's only going to get colder from here on out. Keep your body moving, and tell me if you lose sensation to your extremities."
 
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             asa "Understood!"
-        if girl == "Sola":
+        if girl == u"索拉":
             sol "Understood."
 
     #Wipe
     scene black with horizontalwipe
     scene bg tunnel with horizontalwipe
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "Another forty minutes later, they nearly arrived at their destination. Unfortunately, the latter half of the trip took longer than expected thanks to the bitter cold."
 
-    if girl == "Icari":  
+    if girl == u"伊卡莉" :  
         "The walls were now frozen solid with a thin layer of ice, while small icicles hung from the pipes running along the wall of the tunnel."
     
     "Shields's head spun thanks to the lack of oxygen, which only made the numbness in his fingers and toes  worse."
     kay "(Shit... I completely forgot how much I hated the cold...!)"
     kay "(I remember I used to complain to Ava every day during the winter about our school uniforms...)"
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
 
         kay "(The military uniforms we have now are of course made from thermaweave and can retain body heat much better than wool, but we'd need something closer to a plugsuit to keep us protected against elements like this...)"
     
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         kay "(The military uniforms we have now are of course made from thermaweave and can retain body heat much better than wool, but I'd need something closer to a plugsuit to keep myself protected against elements like this...)"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(532)
         asa "Brrr... Aahhh it's shit cold, capt'n! It's even more shit cold than the winters at Ryuvia! Aahhh!!!"
         asa "Let's finish up here as soon as we can and get outta here!"
         asa "I can hardly even talk 'cause all the snot in mah nose's frozen! Uggghhh!"
 
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70000)
         sol "H-ggnnbrbh..."
         "Sola's face was even paler than usual as she trembled weakly in the cold."
@@ -4643,20 +4643,20 @@ label gotobackupftl:
     kay "(Put. Plug. Into receptor.)"
     kay "(That's what you're here to do...)"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(551)
         asa "Is something the matter?"
         
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70020)
         sol "I-i-is s-something... t-the matter?"
 
     kay "Someone accidentally left a cable unplugged... I won't be able to turn the comm on without it. But the receptor's now frozen solid."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(602)
         asa "Eeeh!? Ah, c'mon, why's nothing going as planned today of all days!?"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70010)
         sol "Alas... P-perhaps m-m-my l-l-lifelong misfortune is s-sabotaging the mission..."
 
@@ -4667,13 +4667,13 @@ label gotobackupftl:
     kay "Tsch. There's only one option."
     kay "I'm going to cross the charges on the battery. It'll make the power cables overheat and melt the ice away."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(542)
         asa "But won't that also burn out the comm too?"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "B-but the comm itself may get damaged..."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         kay "It's the only option we have left!"
         
     "Thanks to the oxygen deprivation and his grim realization that they would not last much longer in the cold, Shields immediately unplugged the two power cables and crossed the charges without a second thought. As expected, the power connections from the batteries to the comm unit began to emit smoke."
@@ -4686,10 +4686,10 @@ label gotobackupftl:
     
     "Suddenly, sparks flew from the comm box as a conduit burst."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(655)
         asa "Stop, stop!!!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70422)
         sol "A-ah!"
 
@@ -4699,10 +4699,10 @@ label gotobackupftl:
     "He breathed out in relief when it amazingly activated."
     kay "We're in business!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(2020)
         asa "All right!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70103)
         sol "Haa..."
 
@@ -4711,34 +4711,34 @@ label gotobackupftl:
     "Shields used the comm's keypad to type out the warning to Fontana and relayed it."
     kay "Now... All we can do is pray someone on board Fontana's ship is watching the distress channel... And takes the message seriously enough to relay it to Fontana."
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "The look of relief on [girl]'s face deflated. True enough, even if they sent the message, there was no guarantee anyone would read it. This was still a long shot..."
     
     "Shields reattached the wall panel, once again closing the comm."
     
     $ backup_comm = True
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         kay "Come on, we've done all we can here. We need to get deeper into the ship, before we freeze to death."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(112)
         asa "No kidding..."
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "Y-yes..."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "The duo made their agonizingly slow return to the center of the ship."
         "Their extremities were now completely numb and their consciousness faded in and out because of the thin air. The return trip proved far more difficult than their first expedition. Worse still, since they were heading to deck 1, they now had to climb up frozen ladders, instead of climbing downwards."
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         play music "Music/Anguish.ogg" fadeout 1.5
         
         "Shields made his agonizingly slow return to the center of the ship."
         "His extremities were now completely numb and his consciousness faded in and out because of the thin air. The return trip proved far more difficult than his first expedition. Worse still, since he was heading to deck 1, he now had to climb up frozen ladders, instead of climbing downwards."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         #ASAGA
         play music "music/Love_Theme.ogg" fadeout 1.5
         asa "U-ugh... T-this is nuts..."
@@ -4869,7 +4869,7 @@ label gotobackupftl:
         if captured == False:
             jump restoringpower
         
-    if girl == "Sola":
+    if girl == u"索拉":
         
         #SOLA
         
@@ -4991,7 +4991,7 @@ label gotobackupftl:
         if captured == False:
             jump restoringpower
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         if not trustclaude:
             $renpy.save("BAD END 6")
         
@@ -5189,15 +5189,15 @@ label badend_deathbydecompression:
     kay "A-argh! Damn!"
     kay "What was that!?"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(1121)
         asa "Eah! There's only one thing that coulda been! We're under attack!"
         
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(71000)
         sol "Tsch. The Sunrider is under attack."
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(34310)
         cla "Ooh! The ship's under attack!"
 
@@ -5205,12 +5205,12 @@ label badend_deathbydecompression:
     kay "(Of course... We've altered the course of history by revealing ourselves to the Prototype leader before the final battle... Is she now going to use this opportunity kill us all here?)"
     kay "Come on! To Engineering, double time!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(2100)
         asa "Roger!"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "Understood."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(36010)
         cla "Sah!"
 
@@ -5218,9 +5218,9 @@ label badend_deathbydecompression:
 
     #Engineering
     scene bg engineering_np
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(32,xpos=0.25)
-    elif girl == "Sola":
+    elif girl == u"索拉":
         $dshow(70122,xpos=0.25)
 
     "Crewmen scrambled as the ship shook. Pipes burst throughout the room, spewing clouds of vapor. Without any power, the ship was both toothless and blind!"
@@ -5244,14 +5244,14 @@ label badend_deathbydecompression:
     "Shields ran to the reactor's controls and found Icari furiously pounding away on the console."
     kay "Icari! What's the situation!"
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(41210,xpos=0.75)
         ica "What are you doin' here, cap!? Aren't you supposed to be on the bridge!?"
         kay "No use! Without power, there's nothing we can do!"
         $dshow(40520)
         ica "Tsch... I don't really know what's going on either... But the reactor's somehow been completely shut off. But now that you're here, I might be able to trick the system into doing a manual reboot."
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(41111,xpos=0.75)
         ica "There you are! Did you manage to send the message!?"
         kay "Yeah! How're things on this end!?"
@@ -5276,10 +5276,10 @@ label badend_deathbydecompression:
     $dshow(40523)
     ica "Y-yeah! Thanks!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(632)
         asa "Capt'n, we gotta restore power now!!! The ship's getting torn apart!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70420)
         sol "We must restore power! The Sunrider is breaking apart!"
 
@@ -5300,13 +5300,13 @@ label badend_deathbydecompression:
     kay "Oh shit!!"
     "The ship bent as it took a hit to its frontal underbelly, violently shoving its neck upwards. Shields rolled out of the way moments before a massive seam split the floor of Engineering in half. In horror, he saw a cross section of the ship below him as the entire room cleaved in two."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(2110)
         asa "Captain! The ship's..."
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70423)
         sol "Captain!"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(41211)
         ica "Captain!!"
 
@@ -5322,47 +5322,47 @@ label badend_deathbydecompression:
     "He saw [girl] running towards him, intending to leap across the chasm to rescue him."
     kay "No! Don't---!!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         asa "HOOYYAAHH!!!!"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "HEAH!!"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         ica "EEAHH!!!"
 
     "Shields's heart plunged in terror as [girl] jumped across the chasm of jagged steel and wiring. If she couldn't make the distance, she would surely fall over thirty meters and be impaled against a nest of broken steel rods."
     "Using all of her effort, she somehow landed on the other side, and rolled back to her feet."
     "[girl] ran to him, concern for Shields' health the only thing in their eyes."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(533)
         asa "How bad is it, capt'n!?"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70022)
         sol "How badly are you hurt?"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(41212)
         ica "How bad is it, captain!?"
 
     kay "You idiot... You shouldn't have come for me..."
     "Shields grimaced as he held his burned arm, now nothing more than a mess of blood and charred muscle."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         asa "Hang on! We gotta get you to sickbay!"
-    if girl == "Sola":
+    if girl == u"索拉":
         sol "A-ah... We must get you to sickbay!"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         ica "Shit, forget getting to the reactor! Only way to treat this is to get you to sickbay!"
 
     kay "No! We've got to restore power first!"
     kay "I'm not gonna die from a burnt arm! But we ARE all going to die if there's no power!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(650)
         asa "No wait--"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70423)
         sol "No wait--"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(42000)
         ica "No wait--"
 
@@ -5433,18 +5433,18 @@ label restoringpower:
     kay "All right, now that we got the message sent, we still need to restore the ship's power."
     kay "The only way to do that is to head to engineering and figure out just what Chigara's done to the main reactor. Looks like there's no way around revealing ourselves to the crew for this."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(2010)
         asa "All right. I'll keep a lookout and make sure the other Kayto Shields doesn't show up."
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70121)
         sol "Understood. I shall keep a lookout and warn you if the other Kayto Shields makes his appearance."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(34200)
         cla "Eh-heh... Mah, I guess to be on the safe side, I should stay hidden in the tunnel... I wouldn't want to risk the crew realizing that the doctor is at two places at once."
         $dshow(34210)
         cla "I'll keep watch and warn you if the other Kayto Shields shows up."
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $dshow(13010)
         ava "All right. I'll stay by you and pretend you're the other Kayto Shields. Hopefully that'll be enough to keep security off of us."
 
@@ -5457,16 +5457,16 @@ label restoringpower:
     kay "A-argh! Damn!"
     kay "What was that!?"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(1120)
         asa "Eah! There's only one thing that coulda been! We're under attack!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70010)
         sol "Tsch. The Sunrider is under attack."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(32311)
         cla "Ooh! The ship's under attack!"
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $dshow(13310)
         ava "Tsch. The explosion came from the exterior of the ship. That can only mean one thing..."
 
@@ -5477,33 +5477,33 @@ label restoringpower:
 
     #Engineering
     scene bg engineering_np with dissolve
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(32,xpos=0.25)
-    elif girl == "Sola":
+    elif girl == u"索拉":
         $dshow(70122,xpos=0.25)
 
     "Crewmen scrambled as the ship shook. Pipes burst throughout the room, spewing clouds of vapor. Without any power, the ship was both toothless and blind!"
     kay "(Shit! I should have seen this coming... Of course the Prototypes would exploit an opportunity like this to sink the ship!)"
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $dshow(13100)
         ava "Change of plans! I've got to get to the bridge! You stay here and find a way to restore power, while I find out the tactical situation!"
         kay "All right! Good luck!"
         "With that, Ava ran out of Engineering and headed to the bridge."
         hide ava with dissolve
 
-    $dshow(41110,xpos=0.75 if girl == "Asaga" or girl == "Sola" else 0.5) #only now do I realize I should have made dshow auto-adjust sprites locations.
+    $dshow(41110,xpos=0.75 if girl == u"阿萨嘉" or girl == u"索拉" else 0.5) #only now do I realize I should have made dshow auto-adjust sprites locations.
     "Shields ran to the reactor's controls and found Icari furiously pounding away on the console."
     kay "Icari! What's the situation!"
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(41210)
         ica "What are you doin' here, cap!? Aren't you supposed to be on the bridge!?"
         kay "No use! Without power, there's nothing we can do!"
         $dshow(40520)
         ica "Tsch... I don't really know what's going on either... But the reactor's somehow been completely shut off. But now that you're here, I might be able to trick the system into doing a manual reboot."
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40122)
         ica "There you are! Did you manage to send the message!?"
         kay "Yeah! How're things on this end!?"
@@ -5616,15 +5616,15 @@ label restoringpower:
     scene bg engineering with dissolve
     
     "Grinning with triumph, Shields climbed up the ladder and grabbed onto Icari's hand."
-    $dshow(41012,xpos = 0.25 if girl == "Asaga" or girl == "Sola" else 0.5)
+    $dshow(41012,xpos = 0.25 if girl == u"阿萨嘉" or girl == u"索拉" else 0.5)
     ica "Hahaah!!! You did it!!!"
     "Overcome with joy, Icari and Shields embraced."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(14,xpos=0.75)
         asa "Ummm..."
         
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(71000,xpos=0.75)
         sol "Hmm..."
 
@@ -5636,7 +5636,7 @@ label restoringpower:
     $dshow(42000,blush=True) #best sprite
     ica "W-what!? I-it's not like I hugged you because I like you or anything! I was just... relieved, that's all! Hah! Hah!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(3210,ypos=1600)
         asa "All right, all right. Thank you for your participation in this little operation, Icari."
         asa "But don't you have a certain lieutenant to go back to?"
@@ -5647,14 +5647,14 @@ label restoringpower:
         $dshow(40220)
         ica "Anyways, it looks like turning our reactor back on scared PACT back for now..."
         
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70310)
         sol "Ahem. In any matter, I am relieved the ship is now operational again."
         sol "Thankfully, the attack seems to have subsided for now... Perhaps the PACT Fleet has fallen back."
 
     play music "music/Posthumus_Regnum.ogg" fadeout 1.5
     
-    if girl == "Ava":
+    if girl == u"艾瓦":
         jump engineering_ava
 
     "Their celebration was abruptly cut short when a squad of marines suddenly burst into Engineering."
@@ -5669,7 +5669,7 @@ label restoringpower:
     "To their dismay, a wall of rifles formed in front of the group."
     mrn "FREEZE!"
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
     
         $dshow(41211)
         ica "Oy! What's the big idea!?"
@@ -5691,23 +5691,23 @@ label restoringpower:
         ica "Ha... hahh... hahaha... I must be dreaming."
         ica "Yep. This has all got to be a dream."
         
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow(2100)
             asa "It's not a dream! But the person beside you is the real Kayto Shields, Icari! He's the one who just saved the ship, remember!?"
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow(70210)
             sol "Alas, this is real. But you must believe in the Kayto Shields standing beside you. He has just defended the ship from doom and will save us all from a grim future..."
 
         kayo "[girl]? I don't know what that imposter's been telling you, but there's no question I'm the real Kayto Shields here..."
         kayo "Don't worry... You're just confused right now. But you'll be safe soon."
         
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             asa "No way! Ah, look, other capt'n, I don't even like ya any more! I think I'll stick with just this Kayto Shields, thank you very much!"
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow(70420)
             sol "No... It is you who is being deceived! You must believe us!"
             
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40010)
         ica "Shit... I was afraid of this..."
         "Shields looked around desperately for an escape route."
@@ -5715,16 +5715,16 @@ label restoringpower:
 
     #god damnit so many sprites!
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(40420,xpos=0.1)
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40420,xpos=0.65)
     show kayto with dissolve:
             xpos 0.3
     $dshow(21221,xpos=0.5,behind="kayto")
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(33,xpos=0.7)
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(71000,xpos=0.7)
     "Just then, Chigara appeared beside the other Shields." 
     kay "(Ah... great... So there's the reason why my other self thinks I'm the one who sabotaged the reactor...)"
@@ -5777,13 +5777,13 @@ label restoringpower:
     "The sorrow... The emptiness..."
     "This man had lost his entire family and hedged all his bets on his new one. And that bet was about to burn everything else he had left to ash." #I don't think that's what 'hedging your bets' means...
 
-    if girl == "Sola":
+    if girl == u"索拉":
         jump engineering_sola
         
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         jump engineering_asaga
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         jump engineering_icari
         
 label engineering_ava:
@@ -6016,12 +6016,12 @@ label engineering_sola:
     kay "(And an entirely different problem is that in my timeline Claude managed to stop Asaga in time...)"
     kay "(The old Claude will probably do the same thing... Unless we somehow put the Bianca out of commission...)"
     
-    if girl == "Sola": #how could it not be?
+    if girl == u"索拉": #how could it not be?
         kay "(The other option is making a run for it right now and escaping the ship with Sola. We could then regroup and come up with a new plan to dispatch Chigara before the massacre. Then we wouldn't need to dirty Asaga's hands. But escaping and coming up with a new plan isn't going to be a walk in the park either...)"
         kay "(What do I do...?)"
     $ menu_choices = [
-                    ["Get Asaga to kill Chigara","engineering_asagakillschigara"],
-                    ["Escape the ship with Sola","engineering_escapewithsola"],
+                    [u"让阿萨嘉杀掉切嘉拉。","engineering_asagakillschigara"],
+                    [u"和索拉一起逃走。","engineering_escapewithsola"],
                     ]
     show screen decision
     pause    
@@ -6205,9 +6205,9 @@ label escapefromengineering:
     "The two of them reached the maintenance tunnel and leaped through the gate."
     "They scrambled down to the hangar as the entire ship rumbled and rattled."
 
-    if girl == "Sola":
+    if girl == u"索拉":
         jump escapehangersola
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         jump escapehangerasaga
 
 label escapehangersola:
@@ -6838,9 +6838,9 @@ label endgame_awardhall:
     play music "music/Anguish.ogg" fadeout 1.5
     
     scene bg awardhall_snipe with dissolve
-    if girl=='Asaga':
+    if girl == u"阿萨嘉":
         $dshow(31)
-    if girl=='Sola':
+    if girl == u"索拉":
         $dshow(70110)
     
     "Shields waited with [girl] on the upper balcony of the award hall..."
@@ -6865,7 +6865,7 @@ label endgame_awardhall:
     "This would be where he would kill the former love of his life."
     kay "... ... ..."
     
-    if girl == "Sola":
+    if girl == u"索拉":
         "Sola wrapped her arms around him."
         $dshow(70201)
         sol "... ... ..."
@@ -6886,7 +6886,7 @@ label endgame_awardhall:
         sol "U-understood..."
         "The two of them once again sat down and waited..."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         
         $dshow(22)
         "Asaga wrapped her arms around him."
@@ -6909,9 +6909,9 @@ label endgame_awardhall:
 
     scene black with horizontalwipe
     scene bg awardhall_snipe with horizontalwipe
-    if girl=='Asaga':
+    if girl == u"阿萨嘉":
         $dshow(31)
-    if girl=='Sola':
+    if girl == u"索拉":
         $dshow(70110)
     "... ... ..."
     "... ..."
@@ -6972,8 +6972,8 @@ label endgame_awardhall:
     with dissolve
     
     $ menu_choices = [
-                    ["Pull the trigger.","pullthetrigger"],
-                    ["Don't pull the trigger","dontpulltrigger"],
+                    [u"扣动扳机。","pullthetrigger"],
+                    [u"不扣动扳机。","dontpulltrigger"],
                     ]
     show screen decision
     pause
@@ -6982,10 +6982,10 @@ label pullthetrigger:
     
     #Pull the trigger.
 
-    if girl=='Asaga':
+    if girl == u"阿萨嘉":
         $renpy.save("ASAGA ALTERNATIVE END")
         hide asaga with dissolve
-    if girl=='Sola':
+    if girl == u"索拉":
         $renpy.save("SOLA ALTERNATIVE END")
         $dshow(70123)
     kay "EAAHH!!! CHIGARA!!!!"
@@ -7014,7 +7014,7 @@ label pullthetrigger:
     kay "I... won...!"
     "And yet, he felt nothing but an black void in his heart."
     
-    if girl == "Sola":
+    if girl == u"索拉":
     
         $dshow(70113,blush=True)
         "Sola embraced him with all her heart, trying to comfort him in his darkest moment."
@@ -7042,7 +7042,7 @@ label pullthetrigger:
         "A time paradox now triggered, this universe ended... And a new universe was born in its place."
         "A mostly happy universe, where the Liberation Day Massacre did not exist. But also one where Shields never got over the scars he received throughout his desperate mission to liberate Cera..."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(422)
         "Asaga embraced him with all her heart, trying to comfort him in his darkest moment."
         asa "You... did it captain!! You... saved everyone! We won!!"
@@ -7084,7 +7084,7 @@ label pullthetrigger:
     "Shortly after the restoration of Cera High Command, Shields transferred himself to a minor desk job, far away from galactic fame. Instead, he lived out the following years as a recluse, never once setting out to space again."
     "Every night, he struggled through nightmares, where he was visited by the rotting corpses of Chigara and his dead sister... Every night, their ghosts reminded him of a single truth: That he had failed to save them. Eventually, he became an insomniac and had to be medicated to be able to function normally."
     
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70321)
         "His sole source of comfort was his loving wife, Sola, who vanished from the galactic stage along with him, and endeavored to singlehandedly heal his wounds."
         "While Shields fell deeper into depression, she watched over him with nothing but a gentle smile. Every night, she stroked his head, until he finally pretended to be asleep."
@@ -7102,7 +7102,7 @@ label pullthetrigger:
         show expression Text("ALTERNATE SOLA END:\nFUTURE WON WITH BLOOD",yalign=0.5,size=90,color="fff")
         pause 3
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(432)
         "His sole source of comfort was his loving wife, Asaga."
         "Yet, their relationship was far from easy either. When they first eloped, rumors spread throughout Ryuvia Prime that their queen had abandoned her people in pursuit of romance."
@@ -7135,9 +7135,9 @@ label pullthetrigger:
 label dontpulltrigger:
     
     #Don't pull the trigger
-    if girl == "Sola":
+    if girl == u"索拉":
         $renpy.save("SOLA NORMAL END")
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $renpy.save("ASAGA NORMAL END")
     kay "No... Chigara...!!"
     "Shields' eyes clenched shut."
@@ -7157,9 +7157,9 @@ label dontpulltrigger:
     chi "I know I'll never be able to replace everything you lost..."
     chi "But... I'll always be here for you."
     scene bg awardhall_snipe with dissolve
-    if girl=='Asaga':
+    if girl == u"阿萨嘉":
         $dshow(31)
-    if girl=='Sola':
+    if girl == u"索拉":
         $dshow(70110)
     kay "(Chigara...)"
     
@@ -7181,7 +7181,7 @@ label dontpulltrigger:
     kay "Come on, [girl]. We're leaving."
     kay "We only have seconds until the massacre begins."
     
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70111)
         sol "... ... ..."
         "Sola's eyes flickered with doubt. But she swallowed her regrets and followed Shields out of the award hall."
@@ -7197,7 +7197,7 @@ label dontpulltrigger:
         "The two of them opened the door out of the hall, and stepped into a blinding white void."
         "Everything faded to nothingness, as the universe resolved Shields' time translocation and returned him to his own timeline..."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(3222,ypos=1600)
         asa "Hey, but---"
         kay "We're through here."
@@ -7224,7 +7224,7 @@ label dontpulltrigger:
 
     call dlc_credits
     
-    if girl == "Sola":
+    if girl == u"索拉":
         scene bg desert with dissolve
         
         play music "music/Colors_of_an_Orchestra_II.ogg" fadeout 1.5
@@ -7284,7 +7284,7 @@ label dontpulltrigger:
         pause 3
         
         
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         
         play music "Music/Cracking_the_Code.ogg" fadeout 1.5
         
@@ -7383,9 +7383,9 @@ label dontpulltrigger:
         
 label endgame_asagakillschigara:
     
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $renpy.save("AVA NORMAL END")
-    if girl == "Sola":
+    if girl == u"索拉":
         $renpy.save("SOLA WORST END")
     
     ##IF BACK UP COMM USED
@@ -7484,7 +7484,7 @@ label endgame_asagakillschigara:
         kay "(Just what kind of lies have Chigara been feeding him lately? For all intents and purposes, he's fallen completely under the Prototypes' control!)"
         kay "(There's no hope of ever convincing him now!)"
         
-        if girl == "Icari":
+        if girl == u"伊卡莉" :
             jump claude_end
         
         "Icari's voice cut through the comm."
@@ -7507,7 +7507,7 @@ label endgame_asagakillschigara:
         
         hide asagacockpit4 with dissolve
         
-        if girl == "Sola":
+        if girl == u"索拉":
             kayo "Sola! Can you snipe down the Black Jack!?"
             
             show solacockpit1 with dissolve
@@ -7526,7 +7526,7 @@ label endgame_asagakillschigara:
             
             hide solacockpit1 with dissolve
             
-        if girl == "Ava":
+        if girl == u"艾瓦":
             kayo "Claude! Use the grav gun to stop Asaga!"
             cla "Teeheeehee... Sorry, captain... But I'm afraid your other version's managed to outmaneuver you."
             show claudecockpit_orb1 with dissolve
@@ -7574,11 +7574,11 @@ label endgame_asagakillschigara:
         "Shields tried to throw himself at his past self, but found that he was completely bound at the foot and wrists. He only struggled in futility against his captor."
         kayo "You son of a bitch..."
         
-        if girl == "Sola":
+        if girl == u"索拉":
         
             kayo "Sola's now in sickbay thanks to your actions... Along with three of my marines..."
             kayo "And I see you've even turned my XO against me."
-        if girl == "Ava":
+        if girl == u"艾瓦":
             kayo "I see you've even turned my XO against me."
         $dshow(10000,xpos=0.66)
         "Shields looked around to see Ava standing beside him, now in handcuffs as well."
@@ -7641,7 +7641,7 @@ label endgame_asagakillschigara:
         asa "O-one day... You're going to realize I was right!!!!"
         kay "TRUST IN ASAGA!!!! SHE'S RIGHT!!!"
         
-        if girl == "Sola":
+        if girl == u"索拉":
             "An alert sounded throughout the bridge."
             cre1 "Captain, we've got an unauthorized launch in the hangar!"
             kayo "What!?"
@@ -7669,7 +7669,7 @@ label endgame_asagakillschigara:
             cla "If that's your choice..."
             hide claudecockpit_orb1 with dissolve
             
-        if girl == "Ava":
+        if girl == u"艾瓦":
             kayo "Claude! Use the grav gun to stop Asaga!"
             cla "Teeheeehee... Sorry, captain... But I'm afraid your other version's managed to outmaneuver you."
             show claudecockpit_orb1 with dissolve
@@ -7695,13 +7695,13 @@ label endgame_asagakillschigara:
         "He would dirty his hands in the process by murdering Chigara... And turn Asaga into her murderer... But it was a small price to pay..."
         "The security of the entire galaxy hinged on this moment."
         
-        if girl == "Sola":
+        if girl == u"索拉":
             "Sola's words echoed in his mind."
             sol "A leader... must bear the weight of his decisions. No matter the burden."
             kay "(I'll... live with this...)"
             kay "(I... have to...!)"
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         kayo "...FIRE ON-"
         "At that moment, Ava broke free of the marines and head butted the other Shields' gut."
         $dshow(11100)
@@ -7747,7 +7747,7 @@ label endgame_asagakillschigara:
     kay "No... No...!!"
     kay "(This... isn't what I thought would happen!!)"
     
-    if girl == "Sola":
+    if girl == u"索拉":
         kayo "...FIRE ON THE BLACK JACK!!!"
         "Shields could only watch as the Sunrider's trinities charged."
         "In just a fraction of a second, the Black Jack would be..."
@@ -7784,7 +7784,7 @@ label endgame_asagakillschigara:
     hide asagacockpit5
     with dissolve
     
-    if girl == "Sola":
+    if girl == u"索拉":
         
         play music "Music/Camino.ogg" fadeout 1.5
 
@@ -7804,7 +7804,7 @@ label endgame_asagakillschigara:
         "In the end..."
         "He had only managed to trade one tragic universe for another."
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         "Shields collapsed to his knees as the Black Jack collided into the Liberty, vaporizing both ryders in a massive fireball."
         kay "No... Asa... ga...!!!"
@@ -7824,7 +7824,7 @@ label endgame_asagakillschigara:
 
     call dlc_credits
     
-    if girl == "Sola":
+    if girl == u"索拉":
         #Park
         scene bg park with dissolve
 
@@ -7898,7 +7898,7 @@ label endgame_asagakillschigara:
             cla "Try again, and this time, see what happens if you choose to escape the Sunrider with Sola!"
         $renpy.full_restart()
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         scene bg shrine with dissolve #grave/memorial background? no? okay.
         
@@ -7997,27 +7997,27 @@ label officeftlfontana:
     scene bg hallway with dissolve
     
     #ffs this is getting complicated
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(34200,xpos=0.2)
-        if girl=="Ava": #only ava and claude with Kayto
+        if girl == u"艾瓦": #only ava and claude with Kayto
             $dshow(13000,xpos=0.4)
             "The two of them climbed out of the service tunnel and dropped down near the captain's office."
         else: # girl, ava and claude
-            if girl=="Asaga":
+            if girl == u"阿萨嘉":
                 $dshow(30,xpos=0.5)
-            if girl=="Sola":
+            if girl == u"索拉":
                 $dshow(70221,xpos=0.5)
             $dshow(13000,xpos=0.8)
             "The trio climbed out of the service tunnel and dropped down near the captain's office."
         
-    if girl == "Icari": #only Kayto and Icari
+    if girl == u"伊卡莉" : #only Kayto and Icari
         $dshow(41111)
         "Icari and Shields climbed out of a service tunnel and dropped down near the captain's office."
 
     "As expected, a pair of marines stood in front of their destination, rifles held at the ready."
     kay "We're going to have to figure out a way to get them out of there."
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(11300)
         ava "It won't be long now until they figure out you've escaped..."
         $dshow(13210)
@@ -8027,7 +8027,7 @@ label officeftlfontana:
         kay "Ah, nice... I guess it pays to have the commander on your side."
         ava "Let's move."
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         ica "It won't be long now until they figure out you've escaped..."
         $dshow(41411)
         ica "For now, I can do this..."
@@ -8041,14 +8041,14 @@ label officeftlfontana:
 
     #Office
     scene bg office with dissolve
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(34200,xpos=0.2)
-        if girl=="ava":
+        if girl == u"艾瓦":
             $dshow(13000,xpos=0.4)
         else:
-            if girl=="Asaga":
+            if girl == u"阿萨嘉":
                 $dshow(30,xpos=0.4)
-            if girl=="Sola":
+            if girl == u"索拉":
                 $dshow(70221,xpos=0.4)
             $dshow(13000,xpos=0.6)
     else:
@@ -8088,28 +8088,28 @@ label officeftlfontana:
     kay "Listen to me, Fontana! This is goddamn important!"
     kay "Your ships have been--"
     "Just then, he heard the door to his office open."
-    if girl == 'Icari':
+    if girl == u"伊卡莉" :
         $dshow(41112)
     else:
         $dshow(34310)
         $dshow(13301)
-        if girl == 'Sola':
+        if girl == u"索拉":
             $dshow(70110)
-        if girl == 'Asaga':
+        if girl == u"阿萨嘉":
             $dshow(534)
     "A lone marine wandered in."
     kay "S-shi--!"
     kay "Fontana, duck!"
     fon "W-wha--!?"
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "Shields and his co-conspirators all dived behind his desk. Fontana instinctively ducked down as well upon seeing everyone react the same way."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(41111)
         "Shields and Icari dived behind his desk. Fontana instinctively ducked down as well upon seeing everyone react the same way."
     
     "Fontana and Shields grimaced when they realized they were practically sitting on top of each other, Fontana's hologram partially merged with Shields' body."
-    if girl!='Icari':
+    if girl != u"伊卡莉":
         $dshow(12022)
         $dshow(34210)
         "Ava couldn't help but notice their compromising position."
@@ -8126,16 +8126,16 @@ label officeftlfontana:
     kay "(Well, that went about as bad as it possibly could...)"
     kay "(Let's hope he doesn't just brush it off as a joke... No, a man like Fontana would be far too careful to just blow off a warning like that.)"
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(13310)
         ava "Kayto, one bogie, coming our way."
         kay "Just one? I think we can take him. Just me and Ava."
-        $tempgirl = 'Ava'
-    if girl == "Icari":
+        $tempgirl = u"艾瓦"
+    if girl == u"伊卡莉" :
         $dshow(41211)
         ica "Cap, one bogie, coming our way."
         kay "Just one? I think we can take him."
-        $tempgirl = 'Icari'
+        $tempgirl = u"伊卡莉"
         
     kay "Okay... On the count of three..."
     kay "One... two..."
@@ -8159,16 +8159,16 @@ label officeftlfontana:
     
     play music "Music/Cracking_the_Code.ogg" fadeout 1.5
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(2120)
         asa "Gyaah!!"
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70423)
         sol "Gyaah!!"
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(41211)
         ica "Gyaah!!"
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $dshow(13110)
         ava "Gyaah!!"
 
@@ -8180,20 +8180,20 @@ label officeftlfontana:
     "Still, Shields took the teapot away from [girl] and returned it to his shelf."
     kay "Be... careful with that."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $dshow(13)
         asa "Huh..."
-    if girl == "Sola":
+    if girl == u"索拉":
         $dshow(70113)
         sol "I'm sorry."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $dshow(40223)
         ica "Uhh... All right."
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $dshow(12314)
         ava "Right."
         
-    if girl != "Icari":
+    if girl != u"伊卡莉":
 
         $dshow(10020)
         "Ava looked around in dismay at the mountain of paperwork now scattered around Shields' desk."
@@ -8205,7 +8205,7 @@ label officeftlfontana:
 
     "They ran out of the office before any more marines could show up."
     
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         jump confrontationwithfate
     
     if killchigara == True:
@@ -8232,14 +8232,14 @@ label gettingclaudetobianca:
     
     scene bg tunnel with dissolve
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(34210,xpos=0.2)
-        if girl=="Ava": 
+        if girl == u"艾瓦": 
             $dshow(13000,xpos=0.4)
         else:
-            if girl=="Asaga":
+            if girl == u"阿萨嘉":
                 $dshow(30,xpos=0.4)
-            if girl=="Sola":
+            if girl == u"索拉":
                 $dshow(70221,xpos=0.4)
             $dshow(13000,xpos=0.6)
     else:
@@ -8259,14 +8259,14 @@ label gettingclaudetobianca:
     #Hangar
     scene bg tunnel with dissolve
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         $dshow(34210,xpos=0.2)
-        if girl=="Ava": 
+        if girl == u"艾瓦": 
             $dshow(13000,xpos=0.5)
         else:
-            if girl=="Asaga":
+            if girl == u"阿萨嘉":
                 $dshow(30,xpos=0.7)
-            if girl=="Sola":
+            if girl == u"索拉":
                 $dshow(70221,xpos=0.7)
             $dshow(13000,xpos=0.5)
     else:
@@ -8291,7 +8291,7 @@ label gettingclaudetobianca:
     "Shields covered his eyes as a spotlight fell on their position. The marines patrolling the floor of the hangar rushed up the catwalk."
     kay "Come on, let's go! Move!"
     
-    if girl == "Sola":
+    if girl == u"索拉":
     
         $dshow(70020)
         sol "Tsch!"
@@ -8337,13 +8337,13 @@ label gettingclaudetobianca:
         "He looked forward, where the Bianca was waiting... And behind him, where Sola was writhing in pain with a squad of marines approaching..."
         
         $ menu_choices = [
-                    ["Get Claude into the Bianca.","getclaudebianca"],
-                    ["Rescue Sola.","rescuesola"],
+                    [u"让科洛特乘上“比安卡”。","getclaudebianca"],
+                    [u"回去救索拉。","rescuesola"],
                     ]
         show screen decision
         pause
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         #AVA
         kay "Uhh... Claude! Isn't there anything you can do!?"
@@ -9606,9 +9606,9 @@ label confrontationwithfate:
         xpos 0.55
     with dissolve
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "However, as soon as they left Shields' office, the trio came face to face with a squad of marines."
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         "However, as soon as they left Shields' office, the duo came face to face with a squad of marines."
 
     kay "Shit!"
@@ -9617,7 +9617,7 @@ label confrontationwithfate:
     kay "(Tsch... Not quite what I was hoping for...)"
     kay "(But we could actually use this to our advantage.)"
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "He faced his companions, but found that Claude had once again vanished into thin air."
         kay "(Looks like Claude's decided to hide for now...)"
         
@@ -9631,16 +9631,16 @@ label confrontationwithfate:
     
     kayo "No need."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         "The other Shields emerged from behind the squad of marines."
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         "The other Shields emerged from behind the squad of marines with the commander."
 
     kayo "You've got some guts breaking into my office. What were you trying to pull in there?"
     kay "I just saved your ass by warning Fontana that the Prototypes sabotaged his ships. You'll thank me for it later."
 
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         
         $dshow("ava armscrossed talk narrow angry",xpos=0.75)
 
@@ -9661,7 +9661,7 @@ label confrontationwithfate:
         kayo "Commander... No... Ex-commander Crescentia. I am relieving you of your command. You are to be confined to quarters until the battle is over so that you can be tried for insubordination."
         kayo "As for you, Prototype... The brig!"
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         $dshow("icari armscrossed shout neutral angry",xpos=0.75)
 
@@ -9683,7 +9683,7 @@ label confrontationwithfate:
         ava "With all due respect, captain-"
         kayo "Enough!"
         
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         #Asaga
         
         $dshow("asaga leanforward yell neutral angry",xpos=0.5,ypos=1600)
@@ -9692,7 +9692,7 @@ label confrontationwithfate:
         asa "Aah, I don't know you any more! I can't believe I actually liked ya at one point! It's over between us! I'll... uhh... just stick with the other captain!"
         kayo "You too, [girl]? What's..."
 
-    if girl == "Sola":
+    if girl == u"索拉":
 
         $dshow("sola armhold frown neutral sad",xpos=0.5)
         sol "Captain... I fear you have become corrupted by the Prototypes' influence. You must open your eyes and listen to the advice of your comrades."
@@ -9700,7 +9700,7 @@ label confrontationwithfate:
         sol "We do not wish to see you in pain again."
         kayo "You too, [girl]? What's..."
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         $dshow("icari point shout neutral angry",xpos=0.5)
         
@@ -9838,16 +9838,16 @@ label confrontationwithfate:
     kayo "Heh. After all, he's at least as smart as I am."
     "Despite the two men being at each other's throats a second ago, Shields could not help but chuckle at his own joke."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         jump asagahscene
         
-    if girl == "Ava":
+    if girl == u"艾瓦":
         jump avahscene
         
-    if girl == "Sola":
+    if girl == u"索拉":
         jump solakiss
         
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         jump icarikiss
         
 label asagahscene:
@@ -11590,7 +11590,7 @@ label thefinalbattle:
     "Alice drew her sabre and came at him."
     ali "Shields!! You must have a death wish!"
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         
         play sound1 "sound/shieldhit.ogg"
         play sound "sound/machinegun.ogg"
@@ -11685,7 +11685,7 @@ label thefinalbattle:
         
         ali "In the end... You are merely a girl..."
 
-    if girl == "Sola":
+    if girl == u"索拉":
         
         play sound "sound/sniperrifle.ogg"
         play sound1 "sound/shieldhit.ogg"
@@ -11811,7 +11811,7 @@ label thefinalbattle:
         ali "You are... but a mockery of the Sharrs of Ryuvia...!"
         ali "Now die like the mongrel you are!"
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         $dshow("icari zpoint_plugsuit shout neutral angry",xpos=0.75)
         
@@ -11990,7 +11990,7 @@ label thefinalbattle:
         ali "Your friend is dead! And the reactor shall soon explode, killing the rest of you!"
         "Alice dropped her now empty rifle and drew her sabre."
 
-    if girl == "Ava":
+    if girl == u"艾瓦":
         
         play sound "sound/pulse2.ogg"
         play sound1 "sound/shieldhit.ogg"
@@ -12087,20 +12087,20 @@ label thefinalbattle:
 
     kay "You've..."
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         play sound1 "sound/shieldhit.ogg"
     play sound "sound/hit.ogg"
     
     "Shields brought down a pipe on Alice's head, sending her sabre clattering to the floor."
     kay "Really gotta cut down on the speeches!"
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         
         $dshow("zalice plugsuit clench wide serious",ypos=1650)
         
         "The pipe crashed against the energy shield, sending feedback jolting through his arm. But Shields mustered his strength. He wrapped himself around Alice, putting her into a sleeper hold as her energy barrier sheared through his uniform and flesh."
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         $dshow("zalice plugsuit shout wide angry",ypos=1650)
         
@@ -12196,7 +12196,7 @@ label thefinalbattle:
         
     "Shields tore the dagger from Chigara's hand and dug it into Alice's gut with all his might."
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         
         play sound "sound/shieldhit.ogg"
         "Electricity surged through his entire body as the dagger cut into her shields. At last, the barrier shattered to pieces."
@@ -12271,15 +12271,15 @@ label thefinalbattle:
         
     hide chigara with dissolve
     
-    if girl != "Icari":
+    if girl != u"伊卡莉":
         
         play music "Music/Epic_Action_Hero.ogg" fadeout 1.5
         
-        if girl == "Asaga":
+        if girl == u"阿萨嘉":
             $dshow("asaga zarmscrossed_plugsuit happy narrow sad",zoom=1.3,ypos=2400)
-        if girl == "Sola":
+        if girl == u"索拉":
             $dshow("sola zarmhold_plugsuit smile narrow sad",zoom=1.3,ypos=2400)
-        if girl == "Ava":
+        if girl == u"艾瓦":
             $dshow("ava handonhair smirk narrow laugh",zoom=1.3,ypos=2400)
             
         
@@ -12288,7 +12288,7 @@ label thefinalbattle:
         "He wrapped his arms around her."
         kay "We... did... it...!!"
 
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         
         play music "Music/Colors_sad.ogg" fadeout 1.5
         
@@ -12504,13 +12504,13 @@ label epilogue_start:
     "In reality, Kayto Shields did not care too much about receiving honors or trying to find influence by befriending powerful Alliance figures."
     "Instead, his only thoughts were about..."
 
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         jump asaga_epilogue
-    if girl == "Sola":
+    if girl == u"索拉":
         jump sola_epilogue
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         jump icari_epilogue
-    if girl == "Ava":
+    if girl == u"艾瓦":
         jump ava_epilogue
         
 label asaga_epilogue:
@@ -13051,13 +13051,13 @@ label ava_epilogue:
 
 label theendfornow:
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
         $renpy.save("ASAGA HAPPY END")
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $renpy.save("AVA HAPPY END")
-    if girl == "Sola":
+    if girl == u"索拉":
         $renpy.save("SOLA HAPPY END")
-    if girl == "Icari":
+    if girl == u"伊卡莉" :
         $renpy.save("ICARI HAPPY END")
     
     play music "Music/Colors_of_an_Orchestra_II.ogg" fadeout 1.5
@@ -13280,7 +13280,7 @@ label theendfornow:
     kay "Set course..."
     kay "For our greatest adventure yet."
     
-    if girl == "Asaga":
+    if girl == u"阿萨嘉":
     
         $persistent.unlocked_endings["ASAGA HAPPY END: OUR GREATEST ADVENTURE YET"] = True
         $chivo_process('Asaga Happy Ending')
@@ -13289,7 +13289,7 @@ label theendfornow:
         scene black with dissolvemedium
         show expression Text("HAPPY ASAGA END:\nOUR GREATEST ADVENTURE",yalign=0.5,size=90,color="fff")
         pause 3
-    if girl == "Sola":
+    if girl == u"索拉":
     
         $persistent.unlocked_endings["SOLA HAPPY END: OUR GREATEST ADVENTURE YET"] = True
         $chivo_process('Sola Happy Ending')
@@ -13298,7 +13298,7 @@ label theendfornow:
         scene black with dissolvemedium
         show expression Text("HAPPY SOLA END:\nOUR GREATEST ADVENTURE",yalign=0.5,size=90,color="fff")
         pause 3
-    if girl == "Ava":
+    if girl == u"艾瓦":
         $persistent.unlocked_endings["AVA HAPPY END: OUR GREATEST ADVENTURE YET"] = True
         $chivo_process('Ava Happy Ending')        
         $check_for_all_endings()
@@ -13306,7 +13306,7 @@ label theendfornow:
         scene black with dissolvemedium
         show expression Text("HAPPY AVA END:\nOUR GREATEST ADVENTURE",yalign=0.5,size=90,color="fff")
         pause 3
-    if girl == "Icari":    
+    if girl == u"伊卡莉" :    
         $persistent.unlocked_endings["ICARI HAPPY END: OUR GREATEST ADVENTURE YET"] = True
         $chivo_process('Icari Happy Ending')        
         $check_for_all_endings()

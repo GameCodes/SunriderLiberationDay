@@ -2092,7 +2092,7 @@ init 2 python: ### Weapons ###
             self.name = 'Sunrider\'s main guns'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
     class SunriderPulse(Laser):
@@ -2231,7 +2231,7 @@ init 2 python: ### Weapons ###
             self.name = 'AllianceCruiser_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
     class AllianceCruiserAssault(Kinetic):
@@ -2347,7 +2347,7 @@ init 2 python: ### Weapons ###
             self.name = 'UnionBattleship_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            对海盗和觊觎中立星缘者的有效吓阻力量。 
+            对海盗和觊觎中立星缘者的有效吓阻力量。
             出于外交关系的考虑和法律规定威力较小。
             面对动能武器时护甲效果加倍。"""
 
@@ -2409,7 +2409,7 @@ init 2 python: ### Weapons ###
             self.name = 'AllianceBattleship_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
     class AllianceBattleshipCannon(Kinetic):
@@ -2521,7 +2521,8 @@ init 2 python: ### Weapons ###
             self.tooltip = u"""
             向敌人发射大量导弹。虽然每发火力较弱，
             但是数量庞大足以造成巨大杀伤。在长距离
-            上依然精准。有弹药限制，会被防空火力削弱。"""
+            上依然精准。有弹药限制，会被防空火力削弱。
+            """
 
     class BlackjackPulse(Laser):
         def __init__(self):
@@ -2648,7 +2649,7 @@ init 2 python: ### Weapons ###
             self.name = 'Paladin_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
 ################################################FRIENDLY ASSAULT CARRIER
@@ -2678,7 +2679,7 @@ init 2 python: ### Weapons ###
             self.name = 'Friendly_PACTAssaultCarrier_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
     class FriendlyPACTAssaultCarrierAssault(Kinetic):
@@ -2727,7 +2728,7 @@ init 2 python: ### Weapons ###
             self.name = 'Friendly_PACTFastCruiser_Kinetic'
             self.lbl = Image('Battle UI/button_kinetic.png')
             self.tooltip = u"""
-            一发远距离和面对小目标敌人时不甚精确的重击。
+            一发面对远距离和小目标敌人时不甚精确的重击。
             面对动能武器时护甲效果加倍。"""
 
     class FriendlyPACTFastCruiserAssault(Kinetic):
@@ -3358,7 +3359,8 @@ init 2 python: ### Weapons ###
             self.name = 'Disable Lite'
             self.lbl = Image('Battle UI/button_disable.png')
             self.tooltip = u"""
-            目标的技能消耗两倍能量。"""
+            目标的技能消耗两倍能量。
+            """
 
     class PactRestore(Restore):
         def __init__(self):
@@ -3598,7 +3600,7 @@ init 2 python: ### Weapons ###
             否则并不精准。可以用来进行先制反击。"""
 
 
-##################################################### UNION FRIGATE
+##################################################### 一整支宇宙舰队并不会瞬间蒸发。瑟拉的迅速沦陷让一些部队分散在星系各处却没有统一指挥。通过支付一些费用，您可以让一些灵巧的瑟拉炮艇回到您的舰队。作为可以同时在宇宙和大气圈内使用的火力支援运输船，这些炮艇可以为大型战舰提供防空和反太空骑士火力。最多同时保有{}艘。
 
 
     class UnionFrigateLaser(Laser):
@@ -4064,7 +4066,7 @@ init 2 python: ### Buffs ###
             
     class FlakUpB(Buff):
         name = "Cover"
-        tooltip = u"为目标提供火力支援，提高十五点防空火力"
+        tooltip = u"为目标提供火力支援，提高15点防空火力"
         affected_stats = ['flak']
         duration = 2
         
@@ -4116,7 +4118,7 @@ init 2 python: ### Buffs ###
     
     class CloakB(Buff):
         name = "Cloak"
-        tooltip = u"""让使用者完全从敌人的雷达上消失，变得无法锁定。
+        tooltip = u"""让使用者完全从敌人的雷达上消失，变得无法锁定。 
         只有敌人的辅助单位可以侦测到并打断这一效果。"""
         affected_stats = ['hate']
         duration = 1
@@ -4288,7 +4290,7 @@ init -1 python: ### SUPPORT SKILLS ###
             self.shot_count = 1
             self.lbl = Image('Battle UI/button_repair.png')
             self.tooltip = u"""
-            为目标回复约{}点生命值。
+            为目标回复约 {} 点生命值。
             使用距离有限。""".format(self.damage)
 
     class AccUp(Support):
@@ -4463,7 +4465,7 @@ init -1 python: ### SUPPORT SKILLS ###
             # self.end_of_turn_callback = self.callback
             self.weapon_replace = EndAwakenAsaga()
             self.tooltip = u"""
-            增加黑杰克的伤害，闪避和护甲，但是也造成每回合递增的伤害直至取消。"""
+            增加黑杰克的伤害，闪避和护甲，但是也受到每回合递增的伤害直至取消。"""
 
         def callback(self):
             if self.parent.has_buff("True Awakening"):
@@ -4777,7 +4779,7 @@ init -1 python: ## store items ##
             self.id = 'sunrider_shield_upgrade'
             self.display_name = u"太阳骑士护盾"
             self.cost = 1500
-            self.tooltip = u"由于太阳骑士号的意外离港，她没来得及装备上能量护盾。尽管她的原装护盾随着瑟拉的沦陷失落了，矿业联合可以为她配备一个基础型护盾装置。护盾购买后可以在研究室进一步升级。"
+            self.tooltip = u"由于太阳骑士号的仓促离港，她没来得及装备上能量护盾。尽管她的原装护盾随着瑟拉的沦陷失落了，矿业联合可以为她配备一个基础型护盾装置。护盾购买后可以在研究室进一步升级。"
             self.visibility_condition = 'store.sunrider.shield_generation == 0'
             self.background_image = "store/item_upgrade.png"
 
@@ -4870,7 +4872,7 @@ init -1 python: ## store items ##
     class MIRVTorpedoLicence(StoreItem):
         def __init__(self):
             StoreItem.__init__(self)
-            self.id = 'MIRV Quantum Torpedo License'
+            self.id = 'MIRV QUANTUM TORPEDO LICENSE'
             self.display_name = u"MIRV量子弹头许可"
             self.cost = 8000
             self.tooltip = u"尽管这被联盟的法律禁止，但我们并没有遵守他们法律的必要不是吗？只要向矿业联合支付一笔可观的费用，他们就可以为我们提供弹头，同时解决掉包括一万两千页“使用条款”在内的法律问题。太阳骑士号的火箭可以造成溅射伤害。" 
@@ -4885,7 +4887,7 @@ init -1 python: ## store items ##
         def __init__(self):
             StoreItem.__init__(self)
             self.id = "Portable Shield Generator Upgrade"
-            self.display_name = u"可携带式护盾装置"
+            self.display_name = u"可动式护盾装置"
             self.cost = 1500
             self.tooltip = u"在发掘一颗偏远行星的时候，矿业联合出土了一台古代太空骑士。尽管太空骑士本身已经无法使用，其驾驶员的遗骸持有着一台单人护盾装置。这种装置可以装在自由的浮游机器人上，让它可以把自己的护盾转移到地图的其他位置。"
             self.visibility_condition = 'not liberty.has_weapon("Portable Shield Generator")'
@@ -4900,7 +4902,7 @@ init -1 python: ## store items ##
             self.id = "Alliance Holo Show"
             self.display_name = u"召唤联盟战舰"
             self.cost = 4000
-            self.tooltip = u"支付相应费用后，矿业联合会在各大媒体的黄金时段播放太阳骑士号的奋战和成就。由于这个节目的影响，联盟愿意保护太阳骑士号的安全，防止这艘知名战舰发生意外……解锁“召唤联盟战舰”指令：消耗2000指挥点数，召唤一艘联盟战舰三回合。"
+            self.tooltip = u"支付相应费用后，矿业联合会在各大媒体的黄金时段播放太阳骑士号的奋战和成就。由于这个节目的影响，联盟愿意保护太阳骑士号的安全，防止这艘知名战舰发生意外……解锁“召唤战舰”指令：消耗2000指挥点数，召唤一艘联盟战舰三回合。"
             self.visibility_condition = '"SUMMON BATTLESHIP" not in BM.orders and (store.mission3_complete or store.mission4_complete)'
             self.background_image = "store/item_upgrade.png"
 
@@ -5457,12 +5459,90 @@ python early: ## achievements ##
             self.description = "Leave the starship grave yard alone."
             self.icon = "nofalcon_locked.png"            
             self.hidden = True
+            
+    ## REturn chivos
     
-            
-            
-            
-            
-            
-            
-            
-            
+    class RE_COMPLETE(Achievement):
+        name = 'REturn Completed'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find all the endings in REturn."
+            self.icon = "re_complete_locked.png"            
+            self.hidden = False
+    class RE_ASA_ALTERNATE(Achievement):
+        name = 'Asaga Alternate Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Asaga's alternate ending."
+            self.icon = "re_asa_alternate_locked.png"            
+            self.hidden = False
+    class RE_ASA_HAPPY(Achievement):
+        name = 'Asaga Happy Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Asaga's happy ending."
+            self.icon = "re_asa_happy_locked.png"
+            self.hidden = False
+    class RE_ASA_NORMAL(Achievement):
+        name = 'Asaga Normal Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Asaga's normal ending."
+            self.icon = "re_asa_normal_locked.png"            
+            self.hidden = False
+    class RE_AVA_HAPPY(Achievement):
+        name = 'Ava Happy Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Ava's happy ending."
+            self.icon = "re_ava_happy_locked.png"
+            self.hidden = False
+    class RE_AVA_NORMAL(Achievement):
+        name = 'Ava Normal Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Ava's normal ending."
+            self.icon = "re_ava_normal_locked.png"            
+            self.hidden = False
+    class RE_SOLA_ALTERNATE(Achievement):
+        name = 'Sola Alternate Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Sola's alternate ending."
+            self.icon = "re_sol_alternate_locked.png"            
+            self.hidden = False
+    class RE_SOLA_HAPPY(Achievement):
+        name = 'Sola Happy Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Sola's happy ending."
+            self.icon = "re_sol_happy_locked.png"
+            self.hidden = False
+    class RE_SOLA_NORMAL(Achievement):
+        name = 'Sola Normal Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Sola's normal ending."
+            self.icon = "re_sol_normal_locked.png"            
+            self.hidden = False
+    class RE_SOLA_WORST(Achievement):
+        name = 'Sola Worst Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Sola's worst ending."
+            self.icon = "re_sol_worst_locked.png"            
+            self.hidden = False
+    class RE_ICARI_HAPPY(Achievement):
+        name = 'Icari Happy Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Icari's happy ending."
+            self.icon = "re_ica_happy_locked.png"
+            self.hidden = False
+    class RE_CLAUDE_SECRET(Achievement):
+        name = 'Claude Secret Ending'
+        def __init__(self):
+            Achievement.__init__(self)
+            self.description = "Find Claude's secret ending."
+            self.icon = "re_cla_secret_locked.png"
+            self.hidden = True
