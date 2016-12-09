@@ -821,10 +821,10 @@ screen preferences:
 
                 imagebutton:
                     xpos 850 ypos 460
-                    idle "UI/usa_base.jpg"
-                    hover "UI/usa_hover.jpg"
-                    selected_idle "UI/usa_select.jpg"
-                    selected_hover "UI/usa_select_hover.jpg"
+                    idle "UI/china_base.jpg"
+                    hover "UI/china_hover.jpg"
+                    selected_idle "UI/china_select.jpg"
+                    selected_hover "UI/china_select_hover.jpg"
                     action Language("Chinese")
                     hover_sound "sound/hover1.ogg"
                     activate_sound "sound/button1.ogg"
