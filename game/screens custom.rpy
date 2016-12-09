@@ -116,10 +116,9 @@ init -20:  ##0) transforms
         pause 2
         alpha 0
         
-    transform damage_float(yy,t=0):        
-        pause t
+    transform damage_float(yy):        
         ypos yy        
-        linear 2.0 ypos (yy - 100)
+        easein 2.0 ypos (yy - 100)
         
     transform tr_melee_animation():
         alpha 0
@@ -493,7 +492,7 @@ screen battle_screen():
                             xpos int(xposition+80*zoomlevel)
                             ypos int(yposition+27*zoomlevel)
                             size int(16) #*zoomlevel)
-                            font "Fonts/SourceCodePro-Regular.ttf"
+                            font "NotoSansCJKsc-Regular.otf"
                             outlines [(2,'000',0,0)]
 
                     else:    #enemies
@@ -512,7 +511,7 @@ screen battle_screen():
                             xpos int(xposition+80*zoomlevel)
                             ypos int(yposition+27*zoomlevel)
                             size int(16) #*zoomlevel)
-                            font "Fonts/SourceCodePro-Regular.ttf"
+                            font "NotoSansCJKsc-Regular.otf"
                             outlines [(2,'000',0,0)]
                             
                     if ship.is_cursed():
@@ -1021,12 +1020,7 @@ screen battle_screen():
                 $shiplist = BM.taking_damage
             
             for ship in shiplist:
-                $energy_mitigation = 0
-                $armor_mitigation = 0
-                if type(shiplist[ship]) is tuple:
-                    $damage,energy_mitigation,armor_mitigation = shiplist[ship]
-                else:
-                    $damage = shiplist[ship]
+                $damage = shiplist[ship]
                 $xposition = dispx(ship.location[0], ship.location[1],zoomlevel,0.50 * ADJX) + int(zoomlevel * MOVX)
                 $yposition = dispy(ship.location[0], ship.location[1],zoomlevel,0.25 * ADJY) + int(zoomlevel * MOVY)
                 $damage_color = 'c00'
@@ -1042,47 +1036,6 @@ screen battle_screen():
                         yanchor 0.5
                         size 40
                         color damage_color
-                        outlines [(2,'fff',0,0)]
-                
-                $delay_float_text = 0.2
-                $y_offset = 15
-                
-                if energy_mitigation > 0:
-                    # hbox:
-                        # at damage_float(yposition,delay_float_text)
-                        # xpos xposition
-                    add "Battle UI/icon_shield.png":
-                        zoom 0.5 
-                        xpos xposition 
-                        at damage_float(yposition+y_offset,delay_float_text)
-                        xanchor 0.5
-                        yanchor 0.5
-                    text "       "+str(energy_mitigation):
-                        at damage_float(yposition+y_offset,delay_float_text)
-                        xpos xposition
-                        xanchor 0.5
-                        yanchor 0.5
-                        size 20
-                        color '44F'
-                        outlines [(2,'fff',0,0)]
-                    $y_offset += 20
-                
-                if armor_mitigation > 0:
-                        
-                    add "Battle UI/icon_armor.png":
-                        at damage_float(yposition+y_offset,delay_float_text)
-                        zoom 0.5
-                        xpos xposition
-                        xanchor 0.5
-                        yanchor 0.5
-                    text "     "+str(armor_mitigation):
-                        at damage_float(yposition+y_offset,delay_float_text)
-                        xpos xposition
-                        xanchor 0.5
-                        yanchor 0.5
-                        ymaximum 50
-                        size 20
-                        color '444'
                         outlines [(2,'fff',0,0)]
 
         ##show +CMD message after something blows up.
@@ -1291,11 +1244,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Provides +15 Aim and +20% damage to all allied units. Will cancel All Guard if active.'):
+                                    text unicode(u'所有友方单位增加15点命中和百分之二十伤害，会取消“ALL GUARD”指令效果。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'ALL GUARD' and BM.show_tooltips == True:
@@ -1304,11 +1257,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Provides +20 Flak, +10 Evasion and +10 shield generation to all ships. Will cancel Full Forward if active.'):
+                                    text unicode(u'所有友方单位增加20点防空、10点闪避和10点护盾，会取消“FULL FORWARD”指令效果。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
                                         
                             if order == 'ALL POWER TO ENGINES' and BM.show_tooltips == True:
@@ -1317,11 +1270,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Halves energy cost of movement for 2 turns'):
+                                    text unicode(u'两回合内移动消耗能量减半。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
                             
                             if order == 'SUMMON BATTLESHIP' and BM.show_tooltips == True:
@@ -1330,11 +1283,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Summon an Alliance battleship to your designated coordinates to fight alongside your fleet for three turns'):
+                                    text unicode(u'在指定位置召唤一艘联盟战舰，在三回合内为你战斗。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'REPAIR DRONES' and BM.show_tooltips == True:
@@ -1343,11 +1296,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Restores {}% of the Sunrider\'s health.'.format(str(int(BM.repair_drone_heal*100)))):
+                                    text unicode(u'为太阳骑士号恢复{}%生命值。'.format(str(int(BM.repair_drone_heal*100)))):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'VANGUARD CANNON' and BM.show_tooltips == True:
@@ -1357,11 +1310,11 @@ screen orders:
                                     ycenter 20
 
                                     $ damage = get_modified_damage(BM.vanguard_damage,'notplayer')
-                                    text str('Deals {} unavoidable damage to all units in a straight line extending outwards from the Sunrider with a maximum range of {} hexes.'.format(damage,BM.vanguard_range)):
+                                    text unicode(u'对以太阳骑士号为起点的一条直线上的所有单位造成{}点无法避免的伤害，范围{}格。'.format(damage,BM.vanguard_range)):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'SHORT RANGE WARP' and BM.show_tooltips == True:
@@ -1370,11 +1323,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Moves the Sunrider to any point on the map. Subsequent uses in the same turn become more expensive each time.'):
+                                    text unicode(u'将太阳骑士号移动到地图上的任意位置，同一回合内多次使用会导致消耗逐次增加。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'RESURRECTION' and BM.show_tooltips == True:
@@ -1383,11 +1336,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Select a downed unit to launch into the battle once more at full health.'):
+                                    text unicode(u'将一个被击败的单位以满生命值重新送回战场。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
                             if order == 'RETREAT' and BM.show_tooltips == True:
@@ -1396,11 +1349,11 @@ screen orders:
                                     xpos 150
                                     ycenter 20
 
-                                    text str('Retreats your units from the battle with no penalties applied.'):
+                                    text unicode(u'将一个单位不受任何惩罚地撤出战斗。'):
                                         xpos 0
                                         ypos 0
                                         size 18
-                                        font "Fonts/SourceCodePro-Regular.ttf"
+                                        font "NotoSansCJKsc-Regular.otf"
                                         outlines [(1,'000',0,0)]
 
 
@@ -1445,19 +1398,19 @@ screen commands: ##show the weapon buttons etc##
         $en_size = int(298*(float(BM.selected.en)/BM.selected.max_en))
         add 'Battle UI/status window_HP.png' xpos 1080 ypos 779 crop (0,0,hp_size,49)
         add 'Battle UI/status window_EN.png' xpos 1133 ypos 805 crop (0,0,en_size,19)
-        text (str(BM.selected.hp) + '/' + str(BM.selected.max_hp)) xanchor 0.5 xpos 1510 ypos 779 size 19 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
-        text (str(BM.selected.en) + '/' + str(BM.selected.max_en)) xanchor 0.5 xpos 1490 ypos 805 size 19 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
+        text (str(BM.selected.hp) + '/' + str(BM.selected.max_hp)) xanchor 0.5 xpos 1510 ypos 779 size 19 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
+        text (str(BM.selected.en) + '/' + str(BM.selected.max_en)) xanchor 0.5 xpos 1490 ypos 805 size 19 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
 
         $effective_flak = ship.flak + ship.modifiers['flak'][0]
         if effective_flak < 0:
             $ effective_flak = 0
         elif effective_flak > 100:
             $ effective_flak = 100
-        text (str(effective_flak)) xanchor 1.0 xpos 1149 ypos 847 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
+        text (str(effective_flak)) xanchor 1.0 xpos 1149 ypos 847 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
 
-        text (str(BM.selected.shields)) xanchor 1.0 xpos 1149 ypos 897 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,BM.selected.shield_color,0,0)]
-        text (str(BM.selected.armor)) xanchor 1.0 xpos 1149 ypos 947 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,BM.selected.armor_color,0,0)]
-        text (str(BM.selected.evasion)) xanchor 1.0 xpos 1149 ypos 997 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
+        text (str(BM.selected.shields)) xanchor 1.0 xpos 1149 ypos 897 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,BM.selected.shield_color,0,0)]
+        text (str(BM.selected.armor)) xanchor 1.0 xpos 1149 ypos 947 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,BM.selected.armor_color,0,0)]
+        text (str(BM.selected.evasion)) xanchor 1.0 xpos 1149 ypos 997 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
 
         ##show weapon stats in status window on hover
 
@@ -1466,9 +1419,9 @@ screen commands: ##show the weapon buttons etc##
                 $weapon = BM.active_weapon
             else:
                 $weapon = BM.weaponhover
-            text (str(real_damage(weapon,ship))) xanchor 1.0 xpos 1380 ypos 840 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
-            text (str(real_damage(weapon,ship)*weapon.shot_count)) xanchor 1.0 xpos 1380 ypos 870 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
-            text (str(weapon.shot_count)) xanchor 1.0 xpos 1515 ypos 840 size 24 font "Fonts/SourceCodePro-Regular.ttf" outlines [(1,'000',0,0)]
+            text (str(real_damage(weapon,ship))) xanchor 1.0 xpos 1380 ypos 840 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
+            text (str(real_damage(weapon,ship)*weapon.shot_count)) xanchor 1.0 xpos 1380 ypos 870 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
+            text (str(weapon.shot_count)) xanchor 1.0 xpos 1515 ypos 840 size 24 font "NotoSansCJKsc-Regular.otf" outlines [(1,'000',0,0)]
 
         # default tt = Tooltip("")
 
@@ -1569,7 +1522,7 @@ screen commands: ##show the weapon buttons etc##
                     xpos (x_offset+80+120*count)
                     ypos (y_offset+95+69*count)
                     size 20
-                    font "Fonts/SourceCodePro-Regular.ttf"
+                    font "NotoSansCJKsc-Regular.otf"
                     outlines [(1,'000',0,0)]
                 python:
                     if not hasattr(weapon,'hp_cost'): weapon.hp_cost = 0
@@ -1580,7 +1533,7 @@ screen commands: ##show the weapon buttons etc##
                         xpos (x_offset+80+120*count)
                         ypos (y_offset+115+69*count)
                         size 20
-                        font "Fonts/SourceCodePro-Regular.ttf"
+                        font "NotoSansCJKsc-Regular.otf"
                         outlines [(1,'000',0,0)]
 
                   ##show ammo available and max_ammo
@@ -1591,7 +1544,7 @@ screen commands: ##show the weapon buttons etc##
                         xpos (x_offset+80+120*count)
                         ypos (y_offset+40+69*count)
                         size 20
-                        font "Fonts/SourceCodePro-Regular.ttf"
+                        font "NotoSansCJKsc-Regular.otf"
                         outlines [(1,'000',0,0)]
                 if weapon.uses_rockets:
                     text '[[{!s}/{!s}]'.format(BM.selected.rockets,BM.selected.max_rockets):
@@ -1600,7 +1553,7 @@ screen commands: ##show the weapon buttons etc##
                         xpos (x_offset+80+120*count)
                         ypos (y_offset+40+69*count)
                         size 20
-                        font "Fonts/SourceCodePro-Regular.ttf"
+                        font "NotoSansCJKsc-Regular.otf"
                         outlines [(1,'000',0,0)]
                 
                 text str(count+1):
@@ -1609,7 +1562,7 @@ screen commands: ##show the weapon buttons etc##
                     xpos (x_offset+80+120*count) - 33
                     ypos (y_offset+40+69*count) - 30
                     size 16
-                    font "Fonts/SourceCodePro-Regular.ttf"
+                    font "NotoSansCJKsc-Regular.otf"
                     outlines [(1,'000',0,0)]
                 
                 $count += 1    
@@ -1877,9 +1830,9 @@ screen tooltips:
             $ xpos_adjustment = 100
         else:
             $ hovered_object = BM.buffhover
-            $ xposition = 0
+            $ xposition = -50
             $ x_anchor = 1.0
-            $ xpos_adjustment = -100
+            $ xpos_adjustment = 100
 
         if hovered_object.tooltip != None:
             frame:
@@ -1888,11 +1841,11 @@ screen tooltips:
                 ycenter mouse_y
                 xanchor x_anchor
 
-                text str(hovered_object.tooltip):
-                    xpos xposition #NO IDEA why I can only get things to align right this way.
-                    ypos -10
+                text unicode(hovered_object.tooltip):
+                    xpos xposition + 50 #NO IDEA why I can only get things to align right this way.
+                    ypos 0
                     size 18
-                    font "Fonts/SourceCodePro-Regular.ttf"
+                    font "NotoSansCJKsc-Regular.otf"
                     outlines [(1,'000',0,0)]
 
 transform hp_falls(hp_size1,hp_size2):
@@ -2754,72 +2707,4 @@ screen achievement_toast(achievement):
                 add "Chivos/" + achievement.icon
                 text achievement.name
                 
-# screen find_sprite():
-    # default character = None
-    # default posture = None
-    
-    # modal True
-    
-    # textbutton "return":
-        # action [SetScreenVariable('character',None),SetScreenVariable('posture',None)]
-        # xalign 0.5
-        # yalign 0.0
-    # key 'r':
-        # action [SetScreenVariable('character',None),SetScreenVariable('posture',None)]
-    
-    # frame:
-        # xalign 0.5
-        # ypos 50
-        # if character is None:
-            # vpgrid:
-                # cols 9
-                # side_align 0.5
-                # for i in range(9):
-                    # if not i == 6:
-                        # $sprite_name = get_sprite_combination(i*10000)
-                        # if sprite_name in store.sprites:
-                            # $displayable_sprite = store.sprites[sprite_name]
-                            # imagebutton:
-                                # idle Transform(displayable_sprite,zoom = 0.2)
-                                # hover Transform(displayable_sprite,zoom = 0.2)
-                                # action SetScreenVariable("character",i)
-                            # key str(i+1):
-                                # action SetScreenVariable("character",i)
-        
-        # if character is not None and posture is None:
-            # vpgrid:
-                # cols 9
-                # side_align 0.5
-                # draggable True
-                # mousewheel True
-                # for i in range(get_posture_count(character)):
-                    # $sprite_name = get_sprite_combination(character*10000+i*1000)
-                    # imagebutton:
-                        # idle Transform(store.sprites[sprite_name],zoom = 0.2)
-                        # hover Transform(store.sprites[sprite_name],zoom = 0.2)
-                        # action SetScreenVariable("posture",i)
-                    # if i+1 < 10:
-                        # key str(i+1):
-                            # action SetScreenVariable("posture",i)
-                        
-        # if character is not None and posture is not None:
-            # vpgrid:
-                # cols 6
-                # draggable True
-                # mousewheel True
-                # side_align 0.5
-                # for mouth_index in range(9):
-                    # for eye_index in range(9):
-                        # for eyebrow_index in range(9):
-                            # $sprite_index = character*10000+posture*1000+mouth_index*100+eye_index*10+eyebrow_index
-                            # $sprite_name = get_sprite_combination(sprite_index)
-                            # if sprite_name in store.sprites:
-                                # $displayable_sprite = store.sprites[sprite_name]
-                                # $cropheight = 150 if character == 0 and posture == 3 else 0
-                                # vbox:
-                                    # add LiveCrop((0,cropheight,300,300) , Transform(displayable_sprite,zoom = 0.4))
-                                    # text str(sprite_index):
-                                        # ypos -200
-                                        # outlines [(1,'000',0,0)]
-                        
     

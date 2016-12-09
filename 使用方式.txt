@@ -18,3 +18,20 @@ https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip
 ==========================================================
 
 注意：虽然提供了语言选择，但是因为游戏内有一些英文不能通过引擎自带的翻译功能翻译，所以实际上使用本补丁后是无法通过语言选择功能恢复英文版的。需要恢复英文版请通过steam重装或用英文版文件覆盖回去。
+
+欢迎转载。转载时原作者名写上Pastolle就可以
+
+我经常出没于NGA论坛bbs.ngacn.cc
+用户名merlinmxz，UID：1631436
+
+百度大概五十年会上一次，ID：pastolle
+http://tieba.baidu.com/home/main?id=c3cd706173746f6c6c65c002&fr=userbar
+
+虽然不知道会不会有人通过QQ反馈，姑且建了一个反馈群334511947。申请入群请说明是游戏反馈
+
+有任何反馈意见和建议欢迎通过论坛短信/留言/QQ等方式提出。
+
+翻译：Pastolle
+协力：呆呆蜗牛 nobody
+
+同时感谢制作组愿意让我以爱好者的身份翻译这个游戏用来与大家分享

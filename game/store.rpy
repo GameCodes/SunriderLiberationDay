@@ -73,7 +73,7 @@ screen store_union:
                                 unhovered SetField(BM,'hovered',None)
                 
                 $item_text_size = 33
-                $item_line_spacing = 5
+                $item_line_spacing = 8
                 
                 vbox:
                     # ypos 12
